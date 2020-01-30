@@ -9,7 +9,10 @@ public class GestionDenuncia {
 	public static ArrayList<Denuncia> denuncias = new ArrayList<Denuncia>();
 
 	public void alta(Denuncia denuncia) {
-		
+		Consultas.actualizarDatos(denuncias);
+		Consultas.comprobarRegistro(denuncia);
+		denuncias.add(denuncia);
+		Consultas.commit(denuncia);
 	}
 
 	public void baja(Denuncia denuncia) {
@@ -21,7 +24,7 @@ public class GestionDenuncia {
 	}
 
 	public String listar() {
-		Consultas.actualizarDatos();
+		Consultas.actualizarDatos(denuncias);
 		String mensaje = "";
 		for (Denuncia denuncia : denuncias) {
 			mensaje += denuncia.toString() + '\n';

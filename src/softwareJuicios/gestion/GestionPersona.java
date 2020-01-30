@@ -10,7 +10,10 @@ public class GestionPersona {
 	public static ArrayList<Persona> personas = new ArrayList<Persona>();
 
 	public void alta(Persona persona) {
-
+Consultas.actualizarDatos(personas);
+Consultas.comprobarRegistro(persona);
+personas.add(persona);
+Consultas.commit(persona);
 	}
 
 	public void baja(Persona persona) {
@@ -22,7 +25,7 @@ public class GestionPersona {
 	}
 
 	public String listar() {
-		Consultas.actualizarDatos();
+		Consultas.actualizarDatos(personas);
 		String mensaje = "";
 		for (Persona persona : personas) {
 			mensaje += persona.toString() + '\n';
