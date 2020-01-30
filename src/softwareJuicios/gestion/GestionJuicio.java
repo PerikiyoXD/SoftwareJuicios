@@ -10,13 +10,21 @@ public class GestionJuicio {
 
 	public void alta(Juicio juicio) {
 		Consultas.actualizarDatos(juicios);
-		Consultas.comprobarRegistro(juicio);
-		juicios.add(juicio);
-		Consultas.commit(juicio);
+
+		if (Consultas.comprobarRegistro(juicio)) {
+			juicios.add(juicio);
+			Consultas.commit(juicio);
+		}
+
 	}
 
-	public void baja(Juicio jucio) {
+	public void baja(Juicio juicio) {
+		Consultas.actualizarDatos(juicios);
 
+		if (Consultas.comprobarRegistro(juicio)) {
+			Consultas.delete(juicio);
+			Consultas.actualizarDatos(juicios);
+		}
 	}
 
 	public void modificar(Juicio juicio) {

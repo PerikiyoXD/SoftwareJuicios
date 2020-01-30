@@ -10,17 +10,26 @@ public class GestionDenuncia {
 
 	public void alta(Denuncia denuncia) {
 		Consultas.actualizarDatos(denuncias);
-		Consultas.comprobarRegistro(denuncia);
-		denuncias.add(denuncia);
-		Consultas.commit(denuncia);
+
+		if (Consultas.comprobarRegistro(denuncia)) {
+			denuncias.add(denuncia);
+			Consultas.commit(denuncia);
+		}
+
 	}
 
 	public void baja(Denuncia denuncia) {
+		Consultas.actualizarDatos(denuncias);
+
+		if (Consultas.comprobarRegistro(denuncia)) {
+			Consultas.delete(denuncia);
+			Consultas.actualizarDatos(denuncias);
+		}
 
 	}
 
 	public void modificar(Denuncia denuncia) {
-		
+
 	}
 
 	public String listar() {

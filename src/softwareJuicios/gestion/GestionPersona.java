@@ -10,13 +10,22 @@ public class GestionPersona {
 	public static ArrayList<Persona> personas = new ArrayList<Persona>();
 
 	public void alta(Persona persona) {
-Consultas.actualizarDatos(personas);
-Consultas.comprobarRegistro(persona);
-personas.add(persona);
-Consultas.commit(persona);
+		Consultas.actualizarDatos(personas);
+
+		if (Consultas.comprobarRegistro(persona)) {
+			personas.add(persona);
+			Consultas.commit(persona);
+		}
+
 	}
 
 	public void baja(Persona persona) {
+		Consultas.actualizarDatos(personas);
+
+		if (Consultas.comprobarRegistro(persona)) {
+			Consultas.delete(persona);
+			Consultas.actualizarDatos(personas);
+		}
 
 	}
 
