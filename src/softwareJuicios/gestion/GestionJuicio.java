@@ -8,15 +8,15 @@ import softwareJuicios.operaciones.Consultas;
 public class GestionJuicio {
 	public static ArrayList<Juicio> juicios = new ArrayList<Juicio>();
 
-	public void alta() {
+	public void alta(Juicio juicio) {
 
 	}
 
-	public void baja() {
+	public void baja(Juicio jucio) {
 
 	}
 
-	public void modificar() {
+	public void modificar(Juicio juicio) {
 
 	}
 
