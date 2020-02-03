@@ -9,21 +9,23 @@ import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 
 public class ConectorNeodatis {
-	private ODB baseDatos;
+	private static ODB baseDatos;
 
 	/***
 	 * Abre base de datos
 	 * 
 	 * @param databaseFileName Ruta de la base de datos
+	 * @return 
 	 */
-	public void abrirBaseDatos(String databaseFileName) {
-		baseDatos = ODBFactory.open(databaseFileName);
+	public static ODB abrirBaseDatos() {
+		baseDatos = ODBFactory.open("juicio.db");
+		return baseDatos;
 	}
 
 	/***
 	 * Cierra base de datos
 	 */
-	public void cerrarBaseDatos() {
+	public static void cerrarBaseDatos() {
 		baseDatos.close();
 	}
 
@@ -36,7 +38,7 @@ public class ConectorNeodatis {
 	 *                Siempre ascendente
 	 * @return ArrayList de objetos
 	 */
-	public ArrayList<Object> hacerConsulta(IQuery query, String orderBy) {
+	public static ArrayList<Object> hacerConsulta(IQuery query, String orderBy) {
 		ArrayList<Object> resultado = null;
 		Objects<Object> objects = null;
 		Iterator<Object> objectIterator = null;

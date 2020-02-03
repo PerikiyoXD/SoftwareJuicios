@@ -1,19 +1,22 @@
 package softwareJuicios.gestion;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+import org.neodatis.odb.Objects;
 
 import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.operaciones.Consultas;
 
 public class GestionDenuncia {
-	public static ArrayList<Denuncia> denuncias = new ArrayList<Denuncia>();
+	public static Objects<Denuncia> denuncias;
 
 	public void alta(Denuncia denuncia) {
 		Consultas.actualizarDatos(denuncias);
 
 		if (Consultas.comprobarRegistro(denuncia)) {
+			JOptionPane.showMessageDialog(null, "registro existente");
+		}else {
 			denuncias.add(denuncia);
-			Consultas.commit(denuncia);
 		}
 
 	}
@@ -24,6 +27,8 @@ public class GestionDenuncia {
 		if (Consultas.comprobarRegistro(denuncia)) {
 			Consultas.delete(denuncia);
 			Consultas.actualizarDatos(denuncias);
+		}else {
+			JOptionPane.showMessageDialog(null, "No existe registro");
 		}
 
 	}

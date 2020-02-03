@@ -2,11 +2,13 @@ package softwareJuicios.gestion;
 
 import java.util.ArrayList;
 
+import org.neodatis.odb.Objects;
+
 import softwareJuicios.entidades.Juicio;
 import softwareJuicios.operaciones.Consultas;
 
 public class GestionJuicio {
-	public static ArrayList<Juicio> juicios = new ArrayList<Juicio>();
+	public static Objects<Juicio> juicios;
 
 	public void alta(Juicio juicio) {
 		Consultas.actualizarDatos(juicios);
