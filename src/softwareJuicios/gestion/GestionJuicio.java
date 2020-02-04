@@ -10,7 +10,7 @@ import softwareJuicios.operaciones.Consultas;
 public class GestionJuicio {
 	public static Objects<Juicio> juicios;
 
-	public void alta(Juicio juicio) {
+	public static void alta(Juicio juicio) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(juicio)) {
 			Consultas.alta(juicio);
@@ -20,7 +20,7 @@ public class GestionJuicio {
 		Consultas.finalizar();
 	}
 
-	public void baja(Juicio juicio) {
+	public static void baja(Juicio juicio) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juicio)) {
 			Consultas.delete(juicio);
@@ -30,7 +30,7 @@ public class GestionJuicio {
 		Consultas.finalizar();
 	}
 
-	public void modificar(Juicio juicio) {
+	public static void modificar(Juicio juicio) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juicio)) {
 			Consultas.modificar(juicio);
@@ -40,7 +40,7 @@ public class GestionJuicio {
 		Consultas.finalizar();
 	}
 
-	public String listar() {
+	public static String listar() {
 		Consultas.alta(juicios);
 		String mensaje = "";
 		for (Juicio juicio : juicios) {

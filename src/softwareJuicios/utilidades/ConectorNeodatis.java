@@ -9,7 +9,7 @@ import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 
 public class ConectorNeodatis {
-	private static ODB baseDatos;
+	public static ODB baseDatos;
 
 	/***
 	 * Abre base de datos
@@ -17,11 +17,9 @@ public class ConectorNeodatis {
 	 * @param databaseFileName Ruta de la base de datos
 	 * @return
 	 */
-	public static ODB abrirBaseDatos() {
+	public static void abrirBaseDatos() {
 		if (baseDatos != null)
-			return baseDatos;
-		baseDatos = ODBFactory.open("juicio.db");
-		return baseDatos;
+			baseDatos = ODBFactory.open("juicio.db");
 	}
 
 	/***

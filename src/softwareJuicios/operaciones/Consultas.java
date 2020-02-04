@@ -1,7 +1,5 @@
 package softwareJuicios.operaciones;
 
-import org.neodatis.odb.ODB;
-
 import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.entidades.Juicio;
@@ -15,37 +13,49 @@ import softwareJuicios.utilidades.ConectorNeodatis;
 public class Consultas {
 
 	public static void alta(Object object) {
+		actualizarDatos();
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(persona);
-
+			ConectorNeodatis.baseDatos.store(persona);
 		}
 		if (object instanceof Denuncia) {
 			Denuncia denuncia = (Denuncia) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(denuncia);
+			ConectorNeodatis.baseDatos.store(denuncia);
 		}
 		if (object instanceof Juicio) {
 			Juicio juicio = (Juicio) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(juicio);
+			ConectorNeodatis.baseDatos.store(juicio);
 		}
 		if (object instanceof Juez) {
 			Juez juez = (Juez) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(juez);
+			ConectorNeodatis.baseDatos.store(juez);
 		}
-		ConectorNeodatis.cerrarBaseDatos();
+		finalizar();
 
 	}
 
 	public static void actualizarDatos() {
-		ODB bd = ConectorNeodatis.abrirBaseDatos();
-		GestionDenuncia.denuncias = bd.getObjects(Denuncia.class);
-		GestionJuez.jueces = bd.getObjects(Juez.class);
-		GestionJuicio.juicios = bd.getObjects(Juicio.class);
-		GestionPersona.personas = bd.getObjects(Persona.class);
+		ConectorNeodatis.abrirBaseDatos();
+		try {
+			GestionDenuncia.denuncias = ConectorNeodatis.baseDatos.getObjects(Denuncia.class);
+		} catch (Exception e) {
+			System.out.println("denuncias = NULL!" + e.getMessage());
+		}
+		try {
+			GestionJuez.jueces = ConectorNeodatis.baseDatos.getObjects(Juez.class);
+		} catch (Exception e) {
+			System.out.println("jueces = NULL!" + e.getMessage());
+		}
+		try {
+			GestionJuicio.juicios = ConectorNeodatis.baseDatos.getObjects(Juicio.class);
+		} catch (Exception e) {
+			System.out.println("juicios = NULL!" + e.getMessage());
+		}
+		try {
+			GestionPersona.personas = ConectorNeodatis.baseDatos.getObjects(Persona.class);
+		} catch (Exception e) {
+			System.out.println("personas = NULL!" + e.getMessage());
+		}
 	}
 
 	public static void finalizar() {
@@ -55,7 +65,6 @@ public class Consultas {
 	public static boolean comprobarRegistro(Object object) {
 
 		actualizarDatos();
-
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
 			for (Persona personaaux : GestionPersona.personas) {
@@ -112,7 +121,24 @@ public class Consultas {
 
 	public static void modificar(Object objeto) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public static int count(Class<?> clase) {
+		int cuenta = -1;
+
+		actualizarDatos();
+		if (clase == Juez.class) {
+			cuenta = GestionJuez.jueces.size();
+		} else if (clase == Persona.class) {
+			cuenta = GestionPersona.personas.size();
+		} else if (clase == Juicio.class) {
+			cuenta = GestionJuicio.juicios.size();
+		} else if (clase == Denuncia.class) {
+			cuenta = GestionDenuncia.denuncias.size();
+		}
+		finalizar();
+		return cuenta;
 	}
 
 }

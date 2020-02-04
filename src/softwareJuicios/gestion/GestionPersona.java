@@ -6,12 +6,11 @@ import org.neodatis.odb.Objects;
 
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.operaciones.Consultas;
-import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class GestionPersona {
 	public static Objects<Persona> personas;
 
-	public void alta(Persona persona) {
+	public static void alta(Persona persona) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(persona)) {
 			Consultas.alta(persona);
@@ -21,7 +20,7 @@ public class GestionPersona {
 		Consultas.finalizar();
 	}
 
-	public void baja(Persona persona) {
+	public static void baja(Persona persona) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
 			Consultas.delete(persona);
@@ -31,7 +30,7 @@ public class GestionPersona {
 		Consultas.finalizar();
 	}
 
-	public void modificar(Persona persona) {
+	public static void modificar(Persona persona) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
 			Consultas.modificar(persona);
@@ -41,7 +40,7 @@ public class GestionPersona {
 		Consultas.finalizar();
 	}
 
-	public String listar() {
+	public static String listar() {
 		Consultas.actualizarDatos();
 		String mensaje = "";
 		for (Persona persona : personas) {
