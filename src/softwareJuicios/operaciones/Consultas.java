@@ -14,7 +14,7 @@ import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class Consultas {
 
-	public static void actualizarDatos(Object object) {
+	public static void alta(Object object) {
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
 			ODB bd = ConectorNeodatis.abrirBaseDatos();
@@ -40,7 +40,7 @@ public class Consultas {
 
 	}
 
-	public static void recuperar() {
+	public static void actualizarDatos() {
 		ODB bd = ConectorNeodatis.abrirBaseDatos();
 		GestionDenuncia.denuncias = bd.getObjects(Denuncia.class);
 		GestionJuez.jueces = bd.getObjects(Juez.class);
@@ -48,64 +48,45 @@ public class Consultas {
 		GestionPersona.personas = bd.getObjects(Persona.class);
 	}
 
+	public static void finalizar() {
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
 	public static boolean comprobarRegistro(Object object) {
-		// TODO Auto-generated method stub
+
+		actualizarDatos();
+
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
-			recuperar();
 			for (Persona personaaux : GestionPersona.personas) {
 				if (personaaux.equals(persona)) {
 					return true;
 				}
 			}
-		}
-		if (object instanceof Denuncia) {
+		} else if (object instanceof Denuncia) {
 			Denuncia denuncia = (Denuncia) object;
-			recuperar();
 			for (Denuncia denunciaaux : GestionDenuncia.denuncias) {
-				if (denunciaaux.equals(denuncia)) {
+				if (denunciaaux.getIdDenuncia() == denuncia.getIdDenuncia()) {
 					return true;
 				}
 			}
-		}
-		if (object instanceof Juicio) {
+		} else if (object instanceof Juicio) {
 			Juicio juicio = (Juicio) object;
-			recuperar();
+			actualizarDatos();
 			for (Juicio juicioaux : GestionJuicio.juicios) {
-				if (juicioaux.equals(juicio)) {
+				if (juicioaux.getIdJuicio() == juicio.getIdJuicio()) {
 					return true;
 				}
 			}
-		}
-		if (object instanceof Juez) {
+		} else if (object instanceof Juez) {
 			Juez juez = (Juez) object;
 			for (Juez juezaux : GestionJuez.jueces) {
-				if (juezaux.equals(juez)) {
+				if (juezaux.getDniJuez().equals(juez.getDniJuez())) {
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-
-	public static void commit(Object object) {
-		// TODO Auto-generated method stub
-		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
-
-		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
-
-		}
 	}
 
 	public static void delete(Object object) {
@@ -127,6 +108,11 @@ public class Consultas {
 
 		}
 
+	}
+
+	public static void modificar(Object objeto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

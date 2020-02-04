@@ -1,46 +1,53 @@
 package softwareJuicios.gestion;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 import org.neodatis.odb.Objects;
 
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.operaciones.Consultas;
+import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class GestionPersona {
-
-	public static Objects<Persona> personas ;
+	public static Objects<Persona> personas;
 
 	public void alta(Persona persona) {
-		Consultas.actualizarDatos(personas);
-
-		if (Consultas.comprobarRegistro(persona)) {
-			personas.add(persona);
-			Consultas.commit(persona);
+		Consultas.actualizarDatos();
+		if (!Consultas.comprobarRegistro(persona)) {
+			Consultas.alta(persona);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro existente");
 		}
-
+		Consultas.finalizar();
 	}
 
 	public void baja(Persona persona) {
-		Consultas.actualizarDatos(personas);
-
+		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
 			Consultas.delete(persona);
-			Consultas.actualizarDatos(personas);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-
+		Consultas.finalizar();
 	}
 
 	public void modificar(Persona persona) {
-
+		Consultas.actualizarDatos();
+		if (Consultas.comprobarRegistro(persona)) {
+			Consultas.modificar(persona);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
+		}
+		Consultas.finalizar();
 	}
 
 	public String listar() {
-		Consultas.actualizarDatos(personas);
+		Consultas.actualizarDatos();
 		String mensaje = "";
 		for (Persona persona : personas) {
 			mensaje += persona.toString() + '\n';
 		}
+		Consultas.finalizar();
 		return mensaje;
 	}
 }

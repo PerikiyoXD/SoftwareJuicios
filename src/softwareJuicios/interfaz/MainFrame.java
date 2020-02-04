@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class MainFrame extends JFrame {
-
+	private static final long serialVersionUID = 536060181222456289L;
 	private JPanel contentPane;
 
 	/**

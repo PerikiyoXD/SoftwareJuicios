@@ -15,9 +15,11 @@ public class ConectorNeodatis {
 	 * Abre base de datos
 	 * 
 	 * @param databaseFileName Ruta de la base de datos
-	 * @return 
+	 * @return
 	 */
 	public static ODB abrirBaseDatos() {
+		if (baseDatos != null)
+			return baseDatos;
 		baseDatos = ODBFactory.open("juicio.db");
 		return baseDatos;
 	}
@@ -26,6 +28,7 @@ public class ConectorNeodatis {
 	 * Cierra base de datos
 	 */
 	public static void cerrarBaseDatos() {
+		baseDatos.commit();
 		baseDatos.close();
 	}
 
