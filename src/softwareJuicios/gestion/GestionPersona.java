@@ -17,7 +17,6 @@ public class GestionPersona {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
-		Consultas.finalizar();
 	}
 
 	public static void baja(Persona persona) {
@@ -27,7 +26,7 @@ public class GestionPersona {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		Consultas.finalizar();
+
 	}
 
 	public static void modificar(Persona persona) {
@@ -37,7 +36,7 @@ public class GestionPersona {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		Consultas.finalizar();
+
 	}
 
 	public static String listar() {
@@ -46,7 +45,6 @@ public class GestionPersona {
 		for (Persona persona : personas) {
 			mensaje += persona.toString() + '\n';
 		}
-		Consultas.finalizar();
 		return mensaje;
 	}
 }

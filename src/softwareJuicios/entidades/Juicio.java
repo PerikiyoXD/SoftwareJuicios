@@ -1,6 +1,6 @@
 package softwareJuicios.entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Juicio {
 	public int idJuicio, idDenuncia;

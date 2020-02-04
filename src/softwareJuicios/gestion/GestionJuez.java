@@ -10,7 +10,7 @@ import softwareJuicios.operaciones.Consultas;
 public class GestionJuez {
 	public static Objects<Juez> jueces;
 
-	public void alta(Juez juez) {
+	public static void alta(Juez juez) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(juez)) {
 			Consultas.alta(juez);
@@ -20,7 +20,7 @@ public class GestionJuez {
 		Consultas.finalizar();
 	}
 
-	public void baja(Juez juez) {
+	public static void baja(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
 			Consultas.delete(juez);
@@ -30,7 +30,7 @@ public class GestionJuez {
 		Consultas.finalizar();
 	}
 
-	public void modificar(Juez juez) {
+	public static void modificar(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
 			Consultas.modificar(juez);
@@ -40,7 +40,7 @@ public class GestionJuez {
 		Consultas.finalizar();
 	}
 
-	public String listar() {
+	public static String listar() {
 		Consultas.actualizarDatos();
 		String mensaje = "";
 		for (Juez juez : jueces) {

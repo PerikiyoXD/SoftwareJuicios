@@ -14,6 +14,7 @@ public class Consultas {
 
 	public static void alta(Object object) {
 		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
 			ConectorNeodatis.baseDatos.store(persona);
@@ -31,7 +32,6 @@ public class Consultas {
 			ConectorNeodatis.baseDatos.store(juez);
 		}
 		finalizar();
-
 	}
 
 	public static void actualizarDatos() {
@@ -56,19 +56,25 @@ public class Consultas {
 		} catch (Exception e) {
 			System.out.println("personas = NULL!" + e.getMessage());
 		}
+		ConectorNeodatis.cerrarBaseDatos();
 	}
 
 	public static void finalizar() {
+		System.out.println("Llama finalizar");
 		ConectorNeodatis.cerrarBaseDatos();
 	}
 
 	public static boolean comprobarRegistro(Object object) {
 
 		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
+
+		System.out.println(object);
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
 			for (Persona personaaux : GestionPersona.personas) {
 				if (personaaux.equals(persona)) {
+					finalizar();
 					return true;
 				}
 			}
@@ -76,14 +82,15 @@ public class Consultas {
 			Denuncia denuncia = (Denuncia) object;
 			for (Denuncia denunciaaux : GestionDenuncia.denuncias) {
 				if (denunciaaux.getIdDenuncia() == denuncia.getIdDenuncia()) {
+					finalizar();
 					return true;
 				}
 			}
 		} else if (object instanceof Juicio) {
 			Juicio juicio = (Juicio) object;
-			actualizarDatos();
 			for (Juicio juicioaux : GestionJuicio.juicios) {
 				if (juicioaux.getIdJuicio() == juicio.getIdJuicio()) {
+					finalizar();
 					return true;
 				}
 			}
@@ -91,10 +98,14 @@ public class Consultas {
 			Juez juez = (Juez) object;
 			for (Juez juezaux : GestionJuez.jueces) {
 				if (juezaux.getDniJuez().equals(juez.getDniJuez())) {
+					finalizar();
 					return true;
 				}
 			}
+		} else {
+			System.out.println("ALGO VA MAL, EEL TIPO NO ES EL CORRECTO?");
 		}
+		finalizar();
 		return false;
 	}
 
