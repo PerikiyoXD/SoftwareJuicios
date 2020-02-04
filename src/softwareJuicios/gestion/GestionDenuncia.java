@@ -13,7 +13,7 @@ public class GestionDenuncia {
 	public static void alta(Denuncia denuncia) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(denuncia)) {
-			Consultas.alta(denuncia);
+			Consultas.insertar(denuncia);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
@@ -23,7 +23,7 @@ public class GestionDenuncia {
 	public static void baja(Denuncia denuncia) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(denuncia)) {
-			Consultas.delete(denuncia);
+			Consultas.borrar(denuncia);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

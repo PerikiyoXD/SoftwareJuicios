@@ -1,13 +1,16 @@
 package softwareJuicios.interfaz;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
-import javax.swing.JPanel;
-import softwareJuicios.interfaz.paneles.AltaJuicioPanel;
-import softwareJuicios.interfaz.paneles.AltaPersonaPanel;
+
 import softwareJuicios.interfaz.paneles.AltaJuezPanel;
+import softwareJuicios.interfaz.paneles.AltaPersonaPanel;
+import softwareJuicios.interfaz.paneles.ListaPersonaPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 public class AltasWindow {
 
@@ -43,13 +46,22 @@ public class AltasWindow {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 628, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		AltaJuezPanel panel = new AltaJuezPanel();
-		frame.getContentPane().add(panel);
-		
-		AltaPersonaPanel altaPersonaPanel = new AltaPersonaPanel();
-		frame.getContentPane().add(altaPersonaPanel);
+				frame.getContentPane().setLayout(new BorderLayout(0, 0));
+								
+								JScrollPane scrollPane = new JScrollPane();
+								frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+								
+								JPanel panel_2 = new JPanel();
+								scrollPane.setViewportView(panel_2);
+								
+										AltaJuezPanel panel = new AltaJuezPanel();
+										panel_2.add(panel);
+										
+												ListaPersonaPanel panel_1 = new ListaPersonaPanel();
+												panel_2.add(panel_1);
+												
+														AltaPersonaPanel altaPersonaPanel = new AltaPersonaPanel();
+														panel_2.add(altaPersonaPanel);
 	}
 
 }

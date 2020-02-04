@@ -19,7 +19,7 @@ public class AltaJuezPanel extends JPanel {
 
 	public AltaJuezPanel() {
 		setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Alta de juez", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		setLayout(new MigLayout("", "[33%][grow]", "[][][][][][][][][][]"));
+		setLayout(new MigLayout("", "[33%][grow]", "[][][][grow][]"));
 		
 		JLabel lblNewLabel = new JLabel("DNI");
 		add(lblNewLabel, "cell 0 0,alignx trailing");
@@ -43,10 +43,10 @@ public class AltaJuezPanel extends JPanel {
 		tfApellido.setColumns(10);
 		
 		JButton btnLimpiar = new JButton("Limpiar");
-		add(btnLimpiar, "flowx,cell 0 9 2 1,growx");
+		add(btnLimpiar, "flowx,cell 0 4 2 1,growx");
 		
 		JButton btnNewButton = new JButton("Aceptar");
-		add(btnNewButton, "cell 0 9,growx");
+		add(btnNewButton, "cell 0 4,growx");
 
 	}
 

@@ -12,28 +12,6 @@ import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class Consultas {
 
-	public static void alta(Object object) {
-		actualizarDatos();
-		ConectorNeodatis.abrirBaseDatos();
-		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
-			ConectorNeodatis.baseDatos.store(persona);
-		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-			ConectorNeodatis.baseDatos.store(denuncia);
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-			ConectorNeodatis.baseDatos.store(juicio);
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
-			ConectorNeodatis.baseDatos.store(juez);
-		}
-		finalizar();
-	}
-
 	public static void actualizarDatos() {
 		ConectorNeodatis.abrirBaseDatos();
 		try {
@@ -59,6 +37,45 @@ public class Consultas {
 		ConectorNeodatis.cerrarBaseDatos();
 	}
 
+	public static void insertar(Object object) {
+		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
+		if (object instanceof Persona) {
+			Persona persona = (Persona) object;
+			ConectorNeodatis.baseDatos.store(persona);
+		}
+		if (object instanceof Denuncia) {
+			Denuncia denuncia = (Denuncia) object;
+			ConectorNeodatis.baseDatos.store(denuncia);
+		}
+		if (object instanceof Juicio) {
+			Juicio juicio = (Juicio) object;
+			ConectorNeodatis.baseDatos.store(juicio);
+		}
+		if (object instanceof Juez) {
+			Juez juez = (Juez) object;
+			ConectorNeodatis.baseDatos.store(juez);
+		}
+		finalizar();
+	}
+
+	public static void borrar(Object object) {
+		ConectorNeodatis.abrirBaseDatos();
+		if (object instanceof Persona) {
+			ConectorNeodatis.baseDatos.delete((Persona) object);
+		}
+		if (object instanceof Denuncia) {
+			ConectorNeodatis.baseDatos.delete((Denuncia) object);
+		}
+		if (object instanceof Juicio) {
+			ConectorNeodatis.baseDatos.delete((Juicio) object);
+		}
+		if (object instanceof Juez) {
+			ConectorNeodatis.baseDatos.delete((Juez) object);
+		}
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
 	public static void finalizar() {
 		System.out.println("Llama finalizar");
 		ConectorNeodatis.cerrarBaseDatos();
@@ -71,63 +88,38 @@ public class Consultas {
 
 		System.out.println(object);
 		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
 			for (Persona personaaux : GestionPersona.personas) {
-				if (personaaux.equals(persona)) {
+				if (personaaux.equals((Persona) object)) {
 					finalizar();
 					return true;
 				}
 			}
 		} else if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
 			for (Denuncia denunciaaux : GestionDenuncia.denuncias) {
-				if (denunciaaux.getIdDenuncia() == denuncia.getIdDenuncia()) {
+				if (denunciaaux.getIdDenuncia() == ((Denuncia) object).getIdDenuncia()) {
 					finalizar();
 					return true;
 				}
 			}
 		} else if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
 			for (Juicio juicioaux : GestionJuicio.juicios) {
-				if (juicioaux.getIdJuicio() == juicio.getIdJuicio()) {
+				if (juicioaux.getIdJuicio() == ((Juicio) object).getIdJuicio()) {
 					finalizar();
 					return true;
 				}
 			}
 		} else if (object instanceof Juez) {
-			Juez juez = (Juez) object;
 			for (Juez juezaux : GestionJuez.jueces) {
-				if (juezaux.getDniJuez().equals(juez.getDniJuez())) {
+				if (juezaux.getDniJuez().equals(((Juez) object).getDniJuez())) {
 					finalizar();
 					return true;
 				}
 			}
 		} else {
-			System.out.println("ALGO VA MAL, EEL TIPO NO ES EL CORRECTO?");
+			System.out.println("ALGO VA MAL, EL TIPO NO ES EL CORRECTO?");
 		}
 		finalizar();
 		return false;
-	}
-
-	public static void delete(Object object) {
-		// TODO Auto-generated method stub
-		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
-
-		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
-
-		}
-
 	}
 
 	public static void modificar(Object objeto) {

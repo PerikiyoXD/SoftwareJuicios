@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,7 +37,7 @@ public class AltaJuicioPanel extends JPanel {
 		setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Alta de juicio", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		setLayout(new MigLayout("", "[33%][grow]", "[][][][][][][grow][]"));
+		setLayout(new MigLayout("", "[33%][grow]", "[][][][][][grow][]"));
 
 		add(new JLabel("Referencia de juicio"), "cell 0 0,alignx trailing");
 
@@ -65,10 +66,10 @@ public class AltaJuicioPanel extends JPanel {
 		add(new JLabel("Fecha del juicio"), "cell 0 4,alignx right");
 
 		calendar = new JCalendar();
-		add(calendar, "cell 1 4,grow");
+		add(calendar, "cell 1 4,alignx center");
 
 		btnLimpiar = new JButton("Limpiar");
-		add(btnLimpiar, "flowx,cell 0 7 2 1,growx");
+		add(btnLimpiar, "flowx,cell 0 6 2 1,growx");
 
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -76,11 +77,12 @@ public class AltaJuicioPanel extends JPanel {
 				doAction();
 			}
 		});
-		add(btnNewButton, "cell 0 7 2 1,growx");
+		add(btnNewButton, "cell 0 6 2 1,growx");
 
 		actualizarCampos();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void actualizarCampos() {
 		Consultas.actualizarDatos();
 		DefaultComboBoxModel<Juicio> modeloJuicios = new DefaultComboBoxModel<Juicio>();
@@ -95,8 +97,8 @@ public class AltaJuicioPanel extends JPanel {
 			modeloJuicios.addElement(juicio);
 		}
 		Consultas.finalizar();
-		cbJuicioAnterior.setModel((DefaultComboBoxModel) modeloJuicios);
-		cbIdDenuncia.setModel((DefaultComboBoxModel) modeloDenuncia);
+		cbJuicioAnterior.setModel((ComboBoxModel) modeloJuicios);
+		cbIdDenuncia.setModel((ComboBoxModel) modeloDenuncia);
 	}
 
 	public void doAction() {

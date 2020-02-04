@@ -13,7 +13,7 @@ public class GestionJuicio {
 	public static void alta(Juicio juicio) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(juicio)) {
-			Consultas.alta(juicio);
+			Consultas.insertar(juicio);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
@@ -23,7 +23,7 @@ public class GestionJuicio {
 	public static void baja(Juicio juicio) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juicio)) {
-			Consultas.delete(juicio);
+			Consultas.borrar(juicio);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
@@ -41,7 +41,7 @@ public class GestionJuicio {
 	}
 
 	public static String listar() {
-		Consultas.alta(juicios);
+		Consultas.insertar(juicios);
 		String mensaje = "";
 		for (Juicio juicio : juicios) {
 			mensaje += juicio.toString() + '\n';

@@ -12,11 +12,6 @@ import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.entidades.Juicio;
 import softwareJuicios.entidades.Persona;
-import softwareJuicios.gestion.GestionDenuncia;
-import softwareJuicios.gestion.GestionJuez;
-import softwareJuicios.gestion.GestionJuicio;
-import softwareJuicios.gestion.GestionPersona;
-import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 536060181222456289L;
@@ -51,17 +46,16 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		//TODO: Inicializar la BD luego! No depender de una BD llena
-		
+		// TODO: Inicializar la BD luego! No depender de una BD llena
+
 		/*
-		ConectorNeodatis.abrirBaseDatos();
-		ConectorNeodatis.baseDatos.store(persona);
-		ConectorNeodatis.baseDatos.store(victima);
-		ConectorNeodatis.baseDatos.store(juez);
-		ConectorNeodatis.baseDatos.store(juicio);
-		ConectorNeodatis.baseDatos.store(denuncia);
-		ConectorNeodatis.cerrarBaseDatos();*/
-		
+		 * ConectorNeodatis.abrirBaseDatos(); ConectorNeodatis.baseDatos.store(persona);
+		 * ConectorNeodatis.baseDatos.store(victima);
+		 * ConectorNeodatis.baseDatos.store(juez);
+		 * ConectorNeodatis.baseDatos.store(juicio);
+		 * ConectorNeodatis.baseDatos.store(denuncia);
+		 * ConectorNeodatis.cerrarBaseDatos();
+		 */
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

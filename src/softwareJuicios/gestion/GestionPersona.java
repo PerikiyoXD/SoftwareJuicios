@@ -13,7 +13,7 @@ public class GestionPersona {
 	public static void alta(Persona persona) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(persona)) {
-			Consultas.alta(persona);
+			Consultas.insertar(persona);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
@@ -22,7 +22,7 @@ public class GestionPersona {
 	public static void baja(Persona persona) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
-			Consultas.delete(persona);
+			Consultas.borrar(persona);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

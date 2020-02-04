@@ -13,7 +13,7 @@ public class GestionJuez {
 	public static void alta(Juez juez) {
 		Consultas.actualizarDatos();
 		if (!Consultas.comprobarRegistro(juez)) {
-			Consultas.alta(juez);
+			Consultas.insertar(juez);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
@@ -23,7 +23,7 @@ public class GestionJuez {
 	public static void baja(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-			Consultas.delete(juez);
+			Consultas.borrar(juez);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

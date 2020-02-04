@@ -21,7 +21,7 @@ public class AltaPersonaPanel extends JPanel {
 
 	public AltaPersonaPanel() {
 		setBorder(new TitledBorder(null, "Alta de persona", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[33%][grow]", "[][][][][][][][][][]"));
+		setLayout(new MigLayout("", "[33%][grow]", "[][][][grow][]"));
 
 		JLabel lblNewLabel = new JLabel("DNI");
 		add(lblNewLabel, "cell 0 0,alignx trailing");
@@ -45,7 +45,7 @@ public class AltaPersonaPanel extends JPanel {
 		tfApellido.setColumns(10);
 
 		JButton btnLimpiar = new JButton("Limpiar");
-		add(btnLimpiar, "flowx,cell 0 9 2 1,growx");
+		add(btnLimpiar, "flowx,cell 0 4 2 1,growx");
 
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -53,7 +53,7 @@ public class AltaPersonaPanel extends JPanel {
 				doAction();
 			}
 		});
-		add(btnNewButton, "cell 0 9,growx");
+		add(btnNewButton, "cell 0 4,growx");
 
 	}
 
