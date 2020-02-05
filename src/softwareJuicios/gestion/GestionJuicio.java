@@ -30,10 +30,13 @@ public class GestionJuicio {
 		Consultas.finalizar();
 	}
 
-	public static void modificar(Juicio juicio) {
+	public static void modificar(Juicio juicio,String campo[],String dato[],String id) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juicio)) {
-			Consultas.modificar(juicio);
+			for (int i = 0; i < campo.length; i++) {
+				Consultas.modificar(juicio,campo[i],dato[i],id);
+			}
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

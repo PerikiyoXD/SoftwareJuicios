@@ -151,7 +151,7 @@ public class ModificarDenunciaPanel extends JPanel {
 	        {
 	            System.out.println(ex);
 	        }
-	        Denuncia denuncia=new Denuncia(datosAntiguos[3],datosAntiguos[1],datosAntiguos[2],Integer.parseInt(datosAntiguos[0]),fechaDate);
+	        Denuncia denuncia=new Denuncia(dato[3],dato[1],dato[2],Integer.parseInt(datosAntiguos[0]),fechaDate);
 		GestionDenuncia.modificar(denuncia, campo, dato, "idDenuncia");
 		
 	}

@@ -18,7 +18,7 @@ import softwareJuicios.operaciones.Consultas;
 public class ListaJuicioPanel extends JPanel {
 
 	private static final long serialVersionUID = 4399415890397369410L;
-	private JTable table;
+	public JTable table;
 
 	public ListaJuicioPanel() {
 		setBorder(new TitledBorder(null, "Lista de juicios", TitledBorder.LEADING, TitledBorder.TOP, null, null));

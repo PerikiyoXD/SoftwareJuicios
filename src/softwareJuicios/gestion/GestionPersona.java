@@ -29,10 +29,13 @@ public class GestionPersona {
 
 	}
 
-	public static void modificar(Persona persona) {
+	public static void modificar(Persona persona,String campo[],String datos[],String id) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
-			Consultas.modificar(persona);
+			for (int i = 0; i < datos.length; i++) {
+					Consultas.modificar(persona,campo[i],datos[i],id);
+			}
+		
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
