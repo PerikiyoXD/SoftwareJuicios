@@ -1,4 +1,4 @@
-package softwareJuicios.interfaz.paneles;
+package softwareJuicios.interfaz.paneles.listar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,16 +11,21 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
-import softwareJuicios.entidades.Persona;
-import softwareJuicios.gestion.GestionPersona;
+import softwareJuicios.entidades.Denuncia;
+import softwareJuicios.gestion.GestionDenuncia;
 import softwareJuicios.operaciones.Consultas;
 
-public class ListaPersonaPanel extends JPanel {
-	private static final long serialVersionUID = 4260193286369716923L;
+public class ListaDenunciaPanel extends JPanel {
+
+	private static final long serialVersionUID = 4399415890397369410L;
+
 	private JTable table;
 
-	public ListaPersonaPanel() {
-		setBorder(new TitledBorder(null, "Lista de personas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	/**
+	 * Create the panel.
+	 */
+	public ListaDenunciaPanel() {
+		setBorder(new TitledBorder(null, "Lista de denuncias", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
 		JButton btnNewButton = new JButton("Actualizar");
@@ -43,11 +48,13 @@ public class ListaPersonaPanel extends JPanel {
 	private void populate() {
 		Consultas.actualizarDatos();
 		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("DNI");
-		dtm.addColumn("Nombre");
-		dtm.addColumn("Apellidos");
-		for (Persona persona : GestionPersona.personas) {
-			dtm.addRow(new Object[] { persona.dni, persona.nombre, persona.apellido });
+		dtm.addColumn("ID de denuncia");
+		dtm.addColumn("Dni acusado");
+		dtm.addColumn("Dni victima");
+		dtm.addColumn("Descripcion");
+		dtm.addColumn("Fecha de formalizacion");
+		for (Denuncia d : GestionDenuncia.denuncias) {
+			dtm.addRow(new Object[] { d.idDenuncia, d.dniAcusado, d.dniVictima, d.descripcion, d.fechaFormalizacion });
 		}
 		table.setModel(dtm);
 

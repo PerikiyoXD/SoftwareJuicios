@@ -5,9 +5,10 @@ import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 
-import softwareJuicios.interfaz.paneles.AltaJuezPanel;
-import softwareJuicios.interfaz.paneles.AltaPersonaPanel;
-import softwareJuicios.interfaz.paneles.ListaPersonaPanel;
+import softwareJuicios.interfaz.paneles.alta.AltaJuezPanel;
+import softwareJuicios.interfaz.paneles.alta.AltaPersonaPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaPersonaPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;

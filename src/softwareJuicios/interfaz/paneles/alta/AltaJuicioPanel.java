@@ -1,4 +1,4 @@
-package softwareJuicios.interfaz.paneles;
+package softwareJuicios.interfaz.paneles.alta;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
