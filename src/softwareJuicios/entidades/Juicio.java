@@ -32,7 +32,7 @@ public class Juicio {
 		return idDenuncia;
 	}
 
-	public void setIdDenuncia(int idDenuncia) {
+	public void setIdDenuncia(Integer idDenuncia) {
 		this.idDenuncia = idDenuncia;
 	}
 

@@ -30,10 +30,13 @@ public class GestionDenuncia {
 		Consultas.finalizar();
 	}
 
-	public static void modificar(Denuncia denuncia) {
+	public static void modificar(Denuncia denuncia,String[] campo,String[] dato,String id) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(denuncia)) {
-			Consultas.modificar(denuncia);
+			for (int i = 0; i < campo.length; i++) {
+				Consultas.modificar(denuncia,campo[i],dato[i],id);
+			}
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

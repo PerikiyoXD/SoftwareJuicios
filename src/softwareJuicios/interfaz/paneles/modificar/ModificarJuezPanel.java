@@ -69,6 +69,8 @@ public class ModificarJuezPanel extends JPanel {
 		
 		JButton btnAceptarCambios = new JButton("Aceptar cambios");
 		add(btnAceptarCambios, "cell 0 1");
+		
+		
 	}
 
 }
