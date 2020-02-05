@@ -19,7 +19,7 @@ public class ListaDenunciaPanel extends JPanel {
 
 	private static final long serialVersionUID = 4399415890397369410L;
 
-	private JTable table;
+	public JTable table;
 
 	/**
 	 * Create the panel.
@@ -44,6 +44,8 @@ public class ListaDenunciaPanel extends JPanel {
 
 		populate();
 	}
+
+	
 
 	private void populate() {
 		Consultas.actualizarDatos();
