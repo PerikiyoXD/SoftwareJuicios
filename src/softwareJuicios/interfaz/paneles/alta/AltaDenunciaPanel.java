@@ -1,4 +1,4 @@
-package softwareJuicios.interfaz.paneles;
+package softwareJuicios.interfaz.paneles.alta;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
