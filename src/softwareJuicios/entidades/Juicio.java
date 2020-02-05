@@ -1,6 +1,6 @@
 package softwareJuicios.entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Juicio {
 	public int idJuicio, idDenuncia;
@@ -18,17 +18,6 @@ public class Juicio {
 		this.localidad = localidad;
 		this.finalizado = finalizado;
 		this.juicioAnterior = juicioAnterior;
-	}
-
-	public Juicio(int idJuicio, int idDenuncia, Date fechaInicio, Date fechaFinalizacion, String localidad,
-			boolean finalizado) {
-		this.idJuicio = idJuicio;
-		this.idDenuncia = idDenuncia;
-		this.fechaInicio = fechaInicio;
-		this.fechaFinalizacion = fechaFinalizacion;
-		this.localidad = localidad;
-		this.finalizado = finalizado;
-		this.juicioAnterior = null;
 	}
 
 	public int getIdJuicio() {

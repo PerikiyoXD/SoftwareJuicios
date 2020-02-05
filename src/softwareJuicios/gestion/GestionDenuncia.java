@@ -10,40 +10,43 @@ import softwareJuicios.operaciones.Consultas;
 public class GestionDenuncia {
 	public static Objects<Denuncia> denuncias;
 
-	public void alta(Denuncia denuncia) {
-		Consultas.actualizarDatos(denuncias);
-
-		if (Consultas.comprobarRegistro(denuncia)) {
+	public static void alta(Denuncia denuncia) {
+		Consultas.actualizarDatos();
+		if (!Consultas.comprobarRegistro(denuncia)) {
+			Consultas.insertar(denuncia);
+		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
-		}else {
-			denuncias.add(denuncia);
 		}
-
+		Consultas.finalizar();
 	}
 
-	public void baja(Denuncia denuncia) {
-		Consultas.actualizarDatos(denuncias);
-
+	public static void baja(Denuncia denuncia) {
+		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(denuncia)) {
-			Consultas.delete(denuncia);
-			Consultas.actualizarDatos(denuncias);
-		}else {
-			JOptionPane.showMessageDialog(null, "No existe registro");
+			Consultas.borrar(denuncia);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-
+		Consultas.finalizar();
 	}
 
-	public void modificar(Denuncia denuncia) {
-
+	public static void modificar(Denuncia denuncia) {
+		Consultas.actualizarDatos();
+		if (Consultas.comprobarRegistro(denuncia)) {
+			Consultas.modificar(denuncia);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
+		}
+		Consultas.finalizar();
 	}
 
-	public String listar() {
-		Consultas.actualizarDatos(denuncias);
+	public static String listar() {
+		Consultas.actualizarDatos();
 		String mensaje = "";
 		for (Denuncia denuncia : denuncias) {
 			mensaje += denuncia.toString() + '\n';
 		}
+		Consultas.finalizar();
 		return mensaje;
-
 	}
 }

@@ -1,6 +1,6 @@
 package softwareJuicios.gestion;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 import org.neodatis.odb.Objects;
 
@@ -8,35 +8,39 @@ import softwareJuicios.entidades.Persona;
 import softwareJuicios.operaciones.Consultas;
 
 public class GestionPersona {
+	public static Objects<Persona> personas;
 
-	public static Objects<Persona> personas ;
+	public static void alta(Persona persona) {
+		Consultas.actualizarDatos();
+		if (!Consultas.comprobarRegistro(persona)) {
+			Consultas.insertar(persona);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro existente");
+		}
+	}
 
-	public void alta(Persona persona) {
-		Consultas.actualizarDatos(personas);
-
+	public static void baja(Persona persona) {
+		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
-			personas.add(persona);
-			Consultas.commit(persona);
+			Consultas.borrar(persona);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
 
 	}
 
-	public void baja(Persona persona) {
-		Consultas.actualizarDatos(personas);
-
+	public static void modificar(Persona persona) {
+		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
-			Consultas.delete(persona);
-			Consultas.actualizarDatos(personas);
+			Consultas.modificar(persona);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
 
 	}
 
-	public void modificar(Persona persona) {
-
-	}
-
-	public String listar() {
-		Consultas.actualizarDatos(personas);
+	public static String listar() {
+		Consultas.actualizarDatos();
 		String mensaje = "";
 		for (Persona persona : personas) {
 			mensaje += persona.toString() + '\n';

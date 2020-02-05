@@ -1,6 +1,6 @@
 package softwareJuicios.gestion;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 import org.neodatis.odb.Objects;
 
@@ -10,35 +10,43 @@ import softwareJuicios.operaciones.Consultas;
 public class GestionJuicio {
 	public static Objects<Juicio> juicios;
 
-	public void alta(Juicio juicio) {
-		Consultas.actualizarDatos(juicios);
-
-		if (Consultas.comprobarRegistro(juicio)) {
-			juicios.add(juicio);
-			Consultas.commit(juicio);
+	public static void alta(Juicio juicio) {
+		Consultas.actualizarDatos();
+		if (!Consultas.comprobarRegistro(juicio)) {
+			Consultas.insertar(juicio);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro existente");
 		}
-
+		Consultas.finalizar();
 	}
 
-	public void baja(Juicio juicio) {
-		Consultas.actualizarDatos(juicios);
-
+	public static void baja(Juicio juicio) {
+		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juicio)) {
-			Consultas.delete(juicio);
-			Consultas.actualizarDatos(juicios);
+			Consultas.borrar(juicio);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
+		Consultas.finalizar();
 	}
 
-	public void modificar(Juicio juicio) {
-
+	public static void modificar(Juicio juicio) {
+		Consultas.actualizarDatos();
+		if (Consultas.comprobarRegistro(juicio)) {
+			Consultas.modificar(juicio);
+		} else {
+			JOptionPane.showMessageDialog(null, "registro no existente");
+		}
+		Consultas.finalizar();
 	}
 
-	public String listar() {
-		Consultas.actualizarDatos(juicios);
+	public static String listar() {
+		Consultas.insertar(juicios);
 		String mensaje = "";
 		for (Juicio juicio : juicios) {
 			mensaje += juicio.toString() + '\n';
 		}
+		Consultas.finalizar();
 		return mensaje;
 
 	}

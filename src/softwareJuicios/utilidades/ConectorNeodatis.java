@@ -8,25 +8,40 @@ import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 
+import softwareJuicios.entidades.Denuncia;
+import softwareJuicios.entidades.Juez;
+import softwareJuicios.entidades.Juicio;
+import softwareJuicios.entidades.Persona;
+
 public class ConectorNeodatis {
-	private static ODB baseDatos;
+	public static ODB baseDatos;
 
 	/***
 	 * Abre base de datos
 	 * 
 	 * @param databaseFileName Ruta de la base de datos
-	 * @return 
+	 * @return
 	 */
-	public static ODB abrirBaseDatos() {
-		baseDatos = ODBFactory.open("juicio.db");
-		return baseDatos;
+	public static void abrirBaseDatos() {
+		System.out.println("ABRIENDO BD");
+		System.out.println("BD: " + baseDatos);
+		if (baseDatos == null) {
+			baseDatos = ODBFactory.open("juicio.db");
+			System.out.println("BD: " + baseDatos);
+			System.out.println(baseDatos.getObjects(Juez.class));
+			System.out.println(baseDatos.getObjects(Juicio.class));
+			System.out.println(baseDatos.getObjects(Denuncia.class));
+			System.out.println(baseDatos.getObjects(Persona.class));
+		}
 	}
 
 	/***
 	 * Cierra base de datos
 	 */
 	public static void cerrarBaseDatos() {
+		System.out.println("CERRANDO BD");
 		baseDatos.close();
+		baseDatos = null;
 	}
 
 	/***

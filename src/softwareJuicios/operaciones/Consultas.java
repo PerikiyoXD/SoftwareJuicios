@@ -1,7 +1,5 @@
 package softwareJuicios.operaciones;
 
-import org.neodatis.odb.ODB;
-
 import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.entidades.Juicio;
@@ -14,119 +12,136 @@ import softwareJuicios.utilidades.ConectorNeodatis;
 
 public class Consultas {
 
-	public static void actualizarDatos(Object object) {
+	public static void actualizarDatos() {
+		ConectorNeodatis.abrirBaseDatos();
+		try {
+			GestionDenuncia.denuncias = ConectorNeodatis.baseDatos.getObjects(Denuncia.class);
+		} catch (Exception e) {
+			System.out.println("denuncias = NULL!" + e.getMessage());
+		}
+		try {
+			GestionJuez.jueces = ConectorNeodatis.baseDatos.getObjects(Juez.class);
+		} catch (Exception e) {
+			System.out.println("jueces = NULL!" + e.getMessage());
+		}
+		try {
+			GestionJuicio.juicios = ConectorNeodatis.baseDatos.getObjects(Juicio.class);
+		} catch (Exception e) {
+			System.out.println("juicios = NULL!" + e.getMessage());
+		}
+		try {
+			GestionPersona.personas = ConectorNeodatis.baseDatos.getObjects(Persona.class);
+		} catch (Exception e) {
+			System.out.println("personas = NULL!" + e.getMessage());
+		}
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
+	public static void insertar(Object object) {
+		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
 		if (object instanceof Persona) {
 			Persona persona = (Persona) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(persona);
-
+			ConectorNeodatis.baseDatos.store(persona);
 		}
 		if (object instanceof Denuncia) {
 			Denuncia denuncia = (Denuncia) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(denuncia);
+			ConectorNeodatis.baseDatos.store(denuncia);
 		}
 		if (object instanceof Juicio) {
 			Juicio juicio = (Juicio) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(juicio);
+			ConectorNeodatis.baseDatos.store(juicio);
 		}
 		if (object instanceof Juez) {
 			Juez juez = (Juez) object;
-			ODB bd = ConectorNeodatis.abrirBaseDatos();
-			bd.store(juez);
+			ConectorNeodatis.baseDatos.store(juez);
 		}
-		ConectorNeodatis.cerrarBaseDatos();
-
+		finalizar();
 	}
 
-	public static void recuperar() {
-		ODB bd = ConectorNeodatis.abrirBaseDatos();
-		GestionDenuncia.denuncias = bd.getObjects(Denuncia.class);
-		GestionJuez.jueces = bd.getObjects(Juez.class);
-		GestionJuicio.juicios = bd.getObjects(Juicio.class);
-		GestionPersona.personas = bd.getObjects(Persona.class);
+	public static void borrar(Object object) {
+		ConectorNeodatis.abrirBaseDatos();
+		if (object instanceof Persona) {
+			ConectorNeodatis.baseDatos.delete((Persona) object);
+		}
+		if (object instanceof Denuncia) {
+			ConectorNeodatis.baseDatos.delete((Denuncia) object);
+		}
+		if (object instanceof Juicio) {
+			ConectorNeodatis.baseDatos.delete((Juicio) object);
+		}
+		if (object instanceof Juez) {
+			ConectorNeodatis.baseDatos.delete((Juez) object);
+		}
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
+	public static void finalizar() {
+		System.out.println("Llama finalizar");
+		ConectorNeodatis.cerrarBaseDatos();
 	}
 
 	public static boolean comprobarRegistro(Object object) {
-		// TODO Auto-generated method stub
+
+		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
+
+		System.out.println(object);
 		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
-			recuperar();
 			for (Persona personaaux : GestionPersona.personas) {
-				if (personaaux.equals(persona)) {
+				if (personaaux.equals((Persona) object)) {
+					finalizar();
 					return true;
 				}
 			}
-		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-			recuperar();
+		} else if (object instanceof Denuncia) {
 			for (Denuncia denunciaaux : GestionDenuncia.denuncias) {
-				if (denunciaaux.equals(denuncia)) {
+				if (denunciaaux.getIdDenuncia() == ((Denuncia) object).getIdDenuncia()) {
+					finalizar();
 					return true;
 				}
 			}
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-			recuperar();
+		} else if (object instanceof Juicio) {
 			for (Juicio juicioaux : GestionJuicio.juicios) {
-				if (juicioaux.equals(juicio)) {
+				if (juicioaux.getIdJuicio() == ((Juicio) object).getIdJuicio()) {
+					finalizar();
 					return true;
 				}
 			}
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
+		} else if (object instanceof Juez) {
 			for (Juez juezaux : GestionJuez.jueces) {
-				if (juezaux.equals(juez)) {
+				if (juezaux.getDniJuez().equals(((Juez) object).getDniJuez())) {
+					finalizar();
 					return true;
 				}
 			}
+		} else {
+			System.out.println("ALGO VA MAL, EL TIPO NO ES EL CORRECTO?");
 		}
+		finalizar();
 		return false;
 	}
 
-	public static void commit(Object object) {
+	public static void modificar(Object objeto) {
 		// TODO Auto-generated method stub
-		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
 
-		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
-
-		}
 	}
 
-	public static void delete(Object object) {
-		// TODO Auto-generated method stub
-		if (object instanceof Persona) {
-			Persona persona = (Persona) object;
+	public static int count(Class<?> clase) {
+		int cuenta = -1;
 
+		actualizarDatos();
+		if (clase == Juez.class) {
+			cuenta = GestionJuez.jueces.size();
+		} else if (clase == Persona.class) {
+			cuenta = GestionPersona.personas.size();
+		} else if (clase == Juicio.class) {
+			cuenta = GestionJuicio.juicios.size();
+		} else if (clase == Denuncia.class) {
+			cuenta = GestionDenuncia.denuncias.size();
 		}
-		if (object instanceof Denuncia) {
-			Denuncia denuncia = (Denuncia) object;
-
-		}
-		if (object instanceof Juicio) {
-			Juicio juicio = (Juicio) object;
-
-		}
-		if (object instanceof Juez) {
-			Juez juez = (Juez) object;
-
-		}
-
+		finalizar();
+		return cuenta;
 	}
 
 }
