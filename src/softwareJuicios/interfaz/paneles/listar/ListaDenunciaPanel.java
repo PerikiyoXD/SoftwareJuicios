@@ -81,12 +81,14 @@ public class ListaDenunciaPanel extends JPanel {
 	 */
 	protected void doDelete() {
 		int selectedRow = table.getSelectedRow();
-		int idDenuncia = (int) table.getValueAt(selectedRow, 0);
 
+		// Comprobar selección en tabla es valida
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");
 			return;
 		}
+
+		int idDenuncia = (int) table.getValueAt(selectedRow, 0);
 
 		for (Denuncia d : GestionDenuncia.denuncias) {
 			if (d.idDenuncia == idDenuncia) {

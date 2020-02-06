@@ -105,24 +105,27 @@ public class Consultas {
 		actualizarDatos();
 		ConectorNeodatis.abrirBaseDatos();
 
-		System.out.println(object);
+		System.out.println("The object:" + object);
 		if (object instanceof Persona) {
 			for (Persona personaaux : GestionPersona.personas) {
-				if (personaaux.equals((Persona) object)) {
+				if (personaaux.dni.equals(((Persona) object).dni)) {
+
+					System.out.println("IOP: " + personaaux);
+					System.out.println("IOP: " + (Persona) object);
 					ConectorNeodatis.cerrarBaseDatos();
 					return true;
 				}
 			}
 		} else if (object instanceof Denuncia) {
 			for (Denuncia denunciaaux : GestionDenuncia.denuncias) {
-				if (denunciaaux.getIdDenuncia() == ((Denuncia) object).getIdDenuncia()) {
+				if (denunciaaux.idDenuncia == ((Denuncia) object).idDenuncia) {
 					ConectorNeodatis.cerrarBaseDatos();
 					return true;
 				}
 			}
 		} else if (object instanceof Juicio) {
 			for (Juicio juicioaux : GestionJuicio.juicios) {
-				if (juicioaux.getIdJuicio() == ((Juicio) object).getIdJuicio()) {
+				if (juicioaux.idJuicio == ((Juicio) object).idJuicio) {
 					ConectorNeodatis.cerrarBaseDatos();
 					return true;
 				}
@@ -142,12 +145,10 @@ public class Consultas {
 	}
 
 	public static void modificar(Object objeto, String campo, String dato, String id) {
-		// TODO Auto-generated method stub
 		IQuery query;
 		if (objeto instanceof Persona) {
 
 			query = new CriteriaQuery(Persona.class, org.neodatis.odb.core.query.criteria.Where.equal("dni", id));
-			Objects<Persona> objetos = ConectorNeodatis.baseDatos.getObjects(query);
 			Persona aux = (Persona) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
 			case "nombre":
@@ -163,7 +164,6 @@ public class Consultas {
 			}
 		} else if (objeto instanceof Denuncia) {
 			query = new CriteriaQuery(Denuncia.class, Where.equal("idDenuncia", id));
-			Objects<Denuncia> objetos = ConectorNeodatis.baseDatos.getObjects(query);
 			Denuncia aux = (Denuncia) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
 			case "dniAcusado":
@@ -201,7 +201,6 @@ public class Consultas {
 			}
 		} else if (objeto instanceof Juicio) {
 			query = new CriteriaQuery(Juicio.class, Where.equal("idJuicio", id));
-			Objects<Juicio> objetos = ConectorNeodatis.baseDatos.getObjects(query);
 			Juicio aux = (Juicio) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
 			case "idDenuncia":
@@ -250,7 +249,6 @@ public class Consultas {
 			}
 		} else if (objeto instanceof Juez) {
 			query = new CriteriaQuery(Juez.class, Where.equal("dniJuez", id));
-			Objects<Juez> objetos = ConectorNeodatis.baseDatos.getObjects(query);
 			Juez aux = (Juez) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
 			case "nombre":

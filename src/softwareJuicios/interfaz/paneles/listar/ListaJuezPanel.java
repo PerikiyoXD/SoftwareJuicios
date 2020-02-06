@@ -68,6 +68,9 @@ public class ListaJuezPanel extends JPanel {
 		doUpdate();
 	}
 
+	/***
+	 * Lógica de eliminación
+	 */
 	protected void doDelete() {
 		int selectedRow = table.getSelectedRow();
 		String dniJuez = (String) table.getValueAt(selectedRow, 0);
@@ -80,11 +83,15 @@ public class ListaJuezPanel extends JPanel {
 		for (Juez j : GestionJuez.jueces) {
 			if (j.dniJuez == dniJuez) {
 				GestionJuez.baja(j);
+				doUpdate();
 				return;
 			}
 		}
 	}
 
+	/***
+	 * Lógica de inserción
+	 */
 	protected void doInsert() {
 		VentanaPrincipal.doAddJueces();
 	}

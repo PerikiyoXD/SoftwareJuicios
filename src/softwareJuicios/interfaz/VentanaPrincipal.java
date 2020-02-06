@@ -2,7 +2,6 @@ package softwareJuicios.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import softwareJuicios.interfaz.paneles.alta.AltaDenunciaPanel;
+import softwareJuicios.interfaz.paneles.alta.AltaJuezPanel;
 import softwareJuicios.interfaz.paneles.alta.AltaJuicioPanel;
 import softwareJuicios.interfaz.paneles.alta.AltaPersonaPanel;
 import softwareJuicios.interfaz.paneles.listar.ListaDenunciaPanel;
@@ -23,7 +23,7 @@ import softwareJuicios.interfaz.paneles.listar.ListaPersonaPanel;
 
 public class VentanaPrincipal {
 
-	private JFrame frame;
+	public JFrame frame;
 	public static JDesktopPane desktopPane;
 	public static JInternalFrame internalFrameListJuicios;
 	public static JInternalFrame internalFrameListJueces;
@@ -34,25 +34,6 @@ public class VentanaPrincipal {
 	public static JInternalFrame internalFrameAltaPersonas;
 	public static JInternalFrame internalFrameAltaDenuncias;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipal window = new VentanaPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public VentanaPrincipal() {
 		initialize();
 	}
@@ -115,10 +96,10 @@ public class VentanaPrincipal {
 
 	public static void doAddDenuncias() {
 		if (internalFrameAltaDenuncias == null) {
-			internalFrameAltaDenuncias = new JInternalFrame("NUEVA DENUNCIA", true, false, false, false);
+			internalFrameAltaDenuncias = new JInternalFrame("NUEVA DENUNCIA", true, true, false, false);
 			internalFrameAltaDenuncias.getContentPane().add(new AltaDenunciaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaDenuncias.setBounds(0, 0, 500, 400);
+		internalFrameAltaDenuncias.setBounds(0, 0, 600, 450);
 
 		if (internalFrameAltaDenuncias.getParent() == null) {
 			desktopPane.add(internalFrameAltaDenuncias);
@@ -130,10 +111,10 @@ public class VentanaPrincipal {
 
 	public static void doAddPersonas() {
 		if (internalFrameAltaPersonas == null) {
-			internalFrameAltaPersonas = new JInternalFrame("NUEVA PERSONA", true, false, false, false);
+			internalFrameAltaPersonas = new JInternalFrame("NUEVA PERSONA", true, true, false, false);
 			internalFrameAltaPersonas.getContentPane().add(new AltaPersonaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaPersonas.setBounds(0, 0, 500, 400);
+		internalFrameAltaPersonas.setBounds(0, 0, 600, 450);
 
 		if (internalFrameAltaPersonas.getParent() == null) {
 			desktopPane.add(internalFrameAltaPersonas);
@@ -143,12 +124,12 @@ public class VentanaPrincipal {
 		internalFrameAltaPersonas.moveToFront();
 	}
 
-	public void doAddJuicios() {
+	public static void doAddJuicios() {
 		if (internalFrameAltaJuicios == null) {
-			internalFrameAltaJuicios = new JInternalFrame("NUEVO JUICIO", true, false, false, false);
+			internalFrameAltaJuicios = new JInternalFrame("NUEVO JUICIO", true, true, false, false);
 			internalFrameAltaJuicios.getContentPane().add(new AltaJuicioPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaJuicios.setBounds(0, 0, 500, 400);
+		internalFrameAltaJuicios.setBounds(0, 0, 600, 450);
 
 		if (internalFrameAltaJuicios.getParent() == null) {
 			desktopPane.add(internalFrameAltaJuicios);
@@ -160,10 +141,10 @@ public class VentanaPrincipal {
 
 	public static void doAddJueces() {
 		if (internalFrameAltaJueces == null) {
-			internalFrameAltaJueces = new JInternalFrame("NUEVO JUEZ", true, false, false, false);
-			internalFrameAltaJueces.getContentPane().add(new ListaJuezPanel(), BorderLayout.CENTER);
+			internalFrameAltaJueces = new JInternalFrame("NUEVO JUEZ", true, true, false, false);
+			internalFrameAltaJueces.getContentPane().add(new AltaJuezPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaJueces.setBounds(0, 0, 500, 400);
+		internalFrameAltaJueces.setBounds(0, 0, 600, 450);
 
 		if (internalFrameAltaJueces.getParent() == null) {
 			desktopPane.add(internalFrameAltaJueces);
@@ -175,10 +156,10 @@ public class VentanaPrincipal {
 
 	protected void doOpenPersonas() {
 		if (internalFrameListPersonas == null) {
-			internalFrameListPersonas = new JInternalFrame("PERSONAS", true, false, false, false);
+			internalFrameListPersonas = new JInternalFrame("PERSONAS", true, true, false, false);
 			internalFrameListPersonas.getContentPane().add(new ListaPersonaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListPersonas.setBounds(0, 0, 500, 400);
+		internalFrameListPersonas.setBounds(0, 0, 600, 450);
 
 		if (internalFrameListPersonas.getParent() == null) {
 			desktopPane.add(internalFrameListPersonas);
@@ -190,10 +171,10 @@ public class VentanaPrincipal {
 
 	protected void doOpenDenuncias() {
 		if (internalFrameListDenuncias == null) {
-			internalFrameListDenuncias = new JInternalFrame("DENUNCIAS", true, false, false, false);
+			internalFrameListDenuncias = new JInternalFrame("DENUNCIAS", true, true, false, false);
 			internalFrameListDenuncias.getContentPane().add(new ListaDenunciaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListDenuncias.setBounds(0, 0, 500, 400);
+		internalFrameListDenuncias.setBounds(0, 0, 600, 450);
 
 		if (internalFrameListDenuncias.getParent() == null) {
 			desktopPane.add(internalFrameListDenuncias);
@@ -205,10 +186,10 @@ public class VentanaPrincipal {
 
 	protected void doOpenJuicios() {
 		if (internalFrameListJuicios == null) {
-			internalFrameListJuicios = new JInternalFrame("JUICIOS", true, false, false, false);
+			internalFrameListJuicios = new JInternalFrame("JUICIOS", true, true, false, false);
 			internalFrameListJuicios.getContentPane().add(new ListaJuicioPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListJuicios.setBounds(0, 0, 500, 400);
+		internalFrameListJuicios.setBounds(0, 0, 600, 450);
 
 		if (internalFrameListJuicios.getParent() == null) {
 			desktopPane.add(internalFrameListJuicios);
@@ -220,15 +201,15 @@ public class VentanaPrincipal {
 
 	protected void doOpenJueces() {
 		if (internalFrameListJueces == null) {
-			internalFrameListJueces = new JInternalFrame("JUECES", true, false, false, false);
-			internalFrameListJueces.setBounds(0, 0, 500, 400);
-			desktopPane.add(internalFrameListJueces);
+			internalFrameListJueces = new JInternalFrame("JUECES", true, true, false, false);
 			internalFrameListJueces.getContentPane().add(new ListaJuezPanel(), BorderLayout.CENTER);
-			internalFrameListJueces.setVisible(true);
 		}
-		if (!(internalFrameListJueces.getParent() == null)) {
+		internalFrameListJueces.setBounds(0, 0, 600, 450);
+
+		if (internalFrameListJueces.getParent() == null) {
 			desktopPane.add(internalFrameListJueces);
 		}
+
 		internalFrameListJueces.setVisible(true);
 		internalFrameListJueces.moveToFront();
 	}

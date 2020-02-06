@@ -5,11 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
+import softwareJuicios.Configuracion;
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionPersona;
 import softwareJuicios.interfaz.VentanaPrincipal;
@@ -63,6 +65,24 @@ public class AltaPersonaPanel extends JPanel {
 		String dni = tfDNI.getText();
 		String nombre = tfNombre.getText();
 		String apellido = tfApellido.getText();
+
+		// Comprobar DNI Valido
+		if (!dni.matches(Configuracion.REGEX_DNI)) {
+			JOptionPane.showMessageDialog(this, "El DNI ofrecido no es válido.", "Error al insertar persona",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// Comprobar DNI no existe
+		{
+			for (Persona persona : GestionPersona.personas) {
+				if (dni.equals(persona.dni)) {
+					JOptionPane.showMessageDialog(this, "El DNI ofrecido ya existe.", "Error al insertar persona",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+		}
 
 		Persona persona = new Persona(dni, nombre, apellido);
 		GestionPersona.alta(persona);

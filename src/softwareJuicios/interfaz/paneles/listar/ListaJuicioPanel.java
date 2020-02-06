@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Juicio;
 import softwareJuicios.gestion.GestionJuicio;
+import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.operaciones.Consultas;
 
 /***
@@ -48,6 +49,11 @@ public class ListaJuicioPanel extends JPanel {
 		scrollPane.setViewportView(table);
 
 		bInsert = new JButton("Insertar");
+		bInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doInsert();
+			}
+		});
 		add(bInsert, "flowx,cell 0 1");
 		add(bAction, "cell 0 1,growx");
 
@@ -62,9 +68,19 @@ public class ListaJuicioPanel extends JPanel {
 		doUpdate();
 	}
 
+	/***
+	 * Lógica de inserción
+	 */
+	protected void doInsert() {
+		VentanaPrincipal.doAddJuicios();
+	}
+
+	/***
+	 * Lógica de eliminación
+	 */
 	protected void doDelete() {
 		int selectedRow = table.getSelectedRow();
-		int idJuicio = Integer.parseInt((String) table.getValueAt(selectedRow, 0));
+		int idJuicio = (int) table.getValueAt(selectedRow, 0);
 
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");

@@ -68,29 +68,39 @@ public class ListaPersonaPanel extends JPanel {
 		doUpdate();
 	}
 
+	/***
+	 * Lógica de eliminación
+	 */
 	protected void doDelete() {
 		int selectedRow = table.getSelectedRow();
-		String dniPersona = (String) table.getValueAt(selectedRow, 0);
 
+		// Comprobar selección en tabla es valida
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");
 			return;
 		}
 
+		String dniPersona = (String) table.getValueAt(selectedRow, 0);
+
 		for (Persona p : GestionPersona.personas) {
 			if (p.dni.equals(dniPersona)) {
 				GestionPersona.baja(p);
+				doUpdate();
 				return;
 			}
 		}
-		doUpdate();
 	}
 
+	/***
+	 * Lógica de inserción
+	 */
 	protected void doInsert() {
 		VentanaPrincipal.doAddPersonas();
-		
 	}
 
+	/***
+	 * Llena la tabla con los elementos a llenar.
+	 */
 	public void doUpdate() {
 		Consultas.actualizarDatos();
 		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
