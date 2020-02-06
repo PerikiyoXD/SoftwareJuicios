@@ -15,7 +15,7 @@ import softwareJuicios.Configuracion;
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionPersona;
 import softwareJuicios.interfaz.VentanaPrincipal;
-import softwareJuicios.interfaz.paneles.listar.ListaPersonaPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaPersonasPanel;
 
 public class AltaPersonaPanel extends JPanel {
 	private static final long serialVersionUID = -9197532968226095389L;
@@ -86,7 +86,7 @@ public class AltaPersonaPanel extends JPanel {
 
 		Persona persona = new Persona(dni, nombre, apellido);
 		GestionPersona.alta(persona);
-		((ListaPersonaPanel) VentanaPrincipal.internalFrameListPersonas.getContentPane().getComponent(0)).doUpdate();
+		((ListaPersonasPanel) VentanaPrincipal.internalFrameListPersonas.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }

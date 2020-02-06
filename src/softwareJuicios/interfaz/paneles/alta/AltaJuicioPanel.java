@@ -23,7 +23,7 @@ import softwareJuicios.entidades.Juicio;
 import softwareJuicios.gestion.GestionDenuncia;
 import softwareJuicios.gestion.GestionJuicio;
 import softwareJuicios.interfaz.VentanaPrincipal;
-import softwareJuicios.interfaz.paneles.listar.ListaJuicioPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaJuiciosPanel;
 import softwareJuicios.operaciones.Consultas;
 
 public class AltaJuicioPanel extends JPanel {
@@ -114,7 +114,7 @@ public class AltaJuicioPanel extends JPanel {
 		Juicio juicio = new Juicio(idJuicio, idDenuncia, new java.sql.Date(fechaInicio.getTime()),
 				(java.sql.Date) fechaFinalizacion, localidad, finalizado, juicioAnterior);
 		GestionJuicio.alta(juicio);
-		((ListaJuicioPanel) VentanaPrincipal.internalFrameListJuicios.getContentPane().getComponent(0)).doUpdate();
+		((ListaJuiciosPanel) VentanaPrincipal.internalFrameListJuicios.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }

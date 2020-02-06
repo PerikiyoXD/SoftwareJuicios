@@ -18,9 +18,10 @@ import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.operaciones.Consultas;
 
 /***
- * Panel con una tabla que muestra personas.
+ * Panel con una tabla que muestra personas. Permite actualizar, insertar y
+ * borrar elementos.
  */
-public class ListaPersonaPanel extends JPanel {
+public class ListaPersonasPanel extends JPanel implements IListaPanel {
 	private static final long serialVersionUID = 4260193286369716923L;
 	public static final Object[] TABLE_COLUMNS = new Object[] { "DNI", "Nombre", "Apellidos" };
 
@@ -30,7 +31,7 @@ public class ListaPersonaPanel extends JPanel {
 	private JButton bInsert;
 	private JButton bDelete;
 
-	public ListaPersonaPanel() {
+	public ListaPersonasPanel() {
 		setBorder(new TitledBorder(null, "Lista de personas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
@@ -71,7 +72,7 @@ public class ListaPersonaPanel extends JPanel {
 	/***
 	 * Lógica de eliminación
 	 */
-	protected void doDelete() {
+	public void doDelete() {
 		int selectedRow = table.getSelectedRow();
 
 		// Comprobar selección en tabla es valida
@@ -94,12 +95,12 @@ public class ListaPersonaPanel extends JPanel {
 	/***
 	 * Lógica de inserción
 	 */
-	protected void doInsert() {
+	public void doInsert() {
 		VentanaPrincipal.doAddPersonas();
 	}
 
 	/***
-	 * Llena la tabla con los elementos a llenar.
+	 * Lógica de actualización
 	 */
 	public void doUpdate() {
 		Consultas.actualizarDatos();

@@ -12,30 +12,32 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
-import softwareJuicios.entidades.Juez;
-import softwareJuicios.gestion.GestionJuez;
+import softwareJuicios.entidades.Juicio;
+import softwareJuicios.gestion.GestionJuicio;
 import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.operaciones.Consultas;
 
 /***
- * Panel con una tabla que muestra jueces.
+ * Panel con una tabla que muestra juicios. Permite actualizar, insertar y
+ * borrar elementos.
  */
-public class ListaJuezPanel extends JPanel {
+public class ListaJuiciosPanel extends JPanel implements IListaPanel {
 	private static final long serialVersionUID = 4399415890397369410L;
-	public static final Object[] TABLE_COLUMNS = new Object[] { "DNI", "Nombre", "Apellidos" };
+	public static final Object[] TABLE_COLUMNS = new Object[] { "ID", "ID Anterior", "Fecha Inicio", "Fecha finaliz.",
+			"Localidad", "Denuncia" };
 
 	public JTable table;
-	private JButton bUpdate;
+	private JButton bAction;
 	private JScrollPane scrollPane;
 	private JButton bInsert;
 	private JButton bDelete;
 
-	public ListaJuezPanel() {
-		setBorder(new TitledBorder(null, "Lista de jueces", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	public ListaJuiciosPanel() {
+		setBorder(new TitledBorder(null, "Lista de juicios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
-		bUpdate = new JButton("Actualizar");
-		bUpdate.addActionListener(new ActionListener() {
+		bAction = new JButton("Actualizar");
+		bAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doUpdate();
 			}
@@ -54,7 +56,7 @@ public class ListaJuezPanel extends JPanel {
 			}
 		});
 		add(bInsert, "flowx,cell 0 1");
-		add(bUpdate, "cell 0 1,growx");
+		add(bAction, "cell 0 1,growx");
 
 		bDelete = new JButton("Eliminar");
 		bDelete.addActionListener(new ActionListener() {
@@ -64,40 +66,38 @@ public class ListaJuezPanel extends JPanel {
 		});
 		add(bDelete, "cell 0 1");
 
-		// Llenar la tabla con datos
 		doUpdate();
+	}
+
+	/***
+	 * Lógica de inserción
+	 */
+	public void doInsert() {
+		VentanaPrincipal.doAddJuicios();
 	}
 
 	/***
 	 * Lógica de eliminación
 	 */
-	protected void doDelete() {
+	public void doDelete() {
 		int selectedRow = table.getSelectedRow();
-		String dniJuez = (String) table.getValueAt(selectedRow, 0);
+		int idJuicio = (int) table.getValueAt(selectedRow, 0);
 
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");
 			return;
 		}
 
-		for (Juez j : GestionJuez.jueces) {
-			if (j.dniJuez == dniJuez) {
-				GestionJuez.baja(j);
-				doUpdate();
+		for (Juicio j : GestionJuicio.juicios) {
+			if (j.idJuicio == idJuicio) {
+				GestionJuicio.baja(j);
 				return;
 			}
 		}
 	}
 
 	/***
-	 * Lógica de inserción
-	 */
-	protected void doInsert() {
-		VentanaPrincipal.doAddJueces();
-	}
-
-	/***
-	 * Llena la tabla con los elementos a llenar.
+	 * Lógica de actualización
 	 */
 	public void doUpdate() {
 		Consultas.actualizarDatos();
@@ -110,8 +110,9 @@ public class ListaJuezPanel extends JPanel {
 			}
 		};
 		// Iteramos y añadimos cada elemento a la tabla
-		for (Juez j : GestionJuez.jueces) {
-			dtm.addRow(new Object[] { j.dniJuez, j.nombre, j.apellidos });
+		for (Juicio j : GestionJuicio.juicios) {
+			dtm.addRow(new Object[] { j.idJuicio, j.juicioAnterior, j.fechaInicio, j.fechaFinalizacion, j.localidad,
+					j.idDenuncia });
 		}
 		table.setModel(dtm);
 	}

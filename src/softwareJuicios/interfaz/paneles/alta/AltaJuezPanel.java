@@ -13,7 +13,7 @@ import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.gestion.GestionJuez;
 import softwareJuicios.interfaz.VentanaPrincipal;
-import softwareJuicios.interfaz.paneles.listar.ListaJuezPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaJuecesPanel;
 
 public class AltaJuezPanel extends JPanel {
 	private static final long serialVersionUID = -9197532968226095389L;
@@ -63,6 +63,6 @@ public class AltaJuezPanel extends JPanel {
 
 		Juez juez = new Juez(dni, nombre, apellido);
 		GestionJuez.alta(juez);
-		((ListaJuezPanel) VentanaPrincipal.internalFrameListJueces.getContentPane().getComponent(0)).doUpdate();
+		((ListaJuecesPanel) VentanaPrincipal.internalFrameListJueces.getContentPane().getComponent(0)).doUpdate();
 	}
 }

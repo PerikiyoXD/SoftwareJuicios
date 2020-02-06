@@ -22,7 +22,7 @@ import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionDenuncia;
 import softwareJuicios.gestion.GestionPersona;
 import softwareJuicios.interfaz.VentanaPrincipal;
-import softwareJuicios.interfaz.paneles.listar.ListaDenunciaPanel;
+import softwareJuicios.interfaz.paneles.listar.IListaPanel;
 
 public class AltaDenunciaPanel extends JPanel {
 	private static final long serialVersionUID = -9197532968226095389L;
@@ -123,7 +123,7 @@ public class AltaDenunciaPanel extends JPanel {
 		Date fechaFormalizacion = calendar.getDate();
 		Denuncia denuncia = new Denuncia(dniAcusado, dniVictima, descripcion, idDenuncia, fechaFormalizacion);
 		GestionDenuncia.alta(denuncia);
-		((ListaDenunciaPanel) VentanaPrincipal.internalFrameListDenuncias.getContentPane().getComponent(0)).doUpdate();
+		((IListaPanel) VentanaPrincipal.internalFrameListDenuncias.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }
