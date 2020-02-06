@@ -96,7 +96,6 @@ public class AltaJuicioPanel extends JPanel {
 		for (Juicio juicio : GestionJuicio.juicios) {
 			modeloJuicios.addElement(juicio);
 		}
-		Consultas.finalizar();
 		cbJuicioAnterior.setModel((ComboBoxModel) modeloJuicios);
 		cbIdDenuncia.setModel((ComboBoxModel) modeloDenuncia);
 	}

@@ -15,42 +15,53 @@ import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionPersona;
 import softwareJuicios.operaciones.Consultas;
 
+/***
+ * Panel con una tabla que muestra personas.
+ */
 public class ListaPersonaPanel extends JPanel {
 	private static final long serialVersionUID = 4260193286369716923L;
+	public static final Object[] TABLE_COLUMNS = new Object[] { "DNI", "Nombre", "Apellidos" };
+
 	private JTable table;
+	private JButton bAction;
+	private JScrollPane scrollPane;
 
 	public ListaPersonaPanel() {
 		setBorder(new TitledBorder(null, "Lista de personas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
-		JButton btnNewButton = new JButton("Actualizar");
-		btnNewButton.addActionListener(new ActionListener() {
+		bAction = new JButton("Actualizar");
+		bAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				populate();
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		add(btnNewButton, "cell 0 1,growx");
+		add(bAction, "cell 0 1,growx");
 
+		// Llenar la tabla con datos
 		populate();
 	}
 
-	private void populate() {
+	public void populate() {
 		Consultas.actualizarDatos();
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("DNI");
-		dtm.addColumn("Nombre");
-		dtm.addColumn("Apellidos");
+		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
+			private static final long serialVersionUID = -9003045890991085220L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		// Iteramos y añadimos cada elemento a la tabla
 		for (Persona persona : GestionPersona.personas) {
 			dtm.addRow(new Object[] { persona.dni, persona.nombre, persona.apellido });
 		}
 		table.setModel(dtm);
-
 	}
-
 }

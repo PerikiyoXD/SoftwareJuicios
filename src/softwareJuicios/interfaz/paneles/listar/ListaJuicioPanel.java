@@ -15,47 +15,57 @@ import softwareJuicios.entidades.Juicio;
 import softwareJuicios.gestion.GestionJuicio;
 import softwareJuicios.operaciones.Consultas;
 
+/***
+ * Panel con una tabla que muestra juicios.
+ */
 public class ListaJuicioPanel extends JPanel {
-
 	private static final long serialVersionUID = 4399415890397369410L;
+	public static final Object[] TABLE_COLUMNS = new Object[] { "ID", "ID Anterior", "Fecha Inicio", "Fecha finaliz.",
+			"Localidad", "Denuncia" };
+
 	public JTable table;
+	private JButton bAction;
+	private JScrollPane scrollPane;
 
 	public ListaJuicioPanel() {
 		setBorder(new TitledBorder(null, "Lista de juicios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
-		JButton btnNewButton = new JButton("Actualizar");
-		btnNewButton.addActionListener(new ActionListener() {
+		bAction = new JButton("Actualizar");
+		bAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				populate();
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		add(btnNewButton, "cell 0 1,growx");
+		add(bAction, "cell 0 1,growx");
 
 		populate();
 	}
 
-	private void populate() {
+	/***
+	 * Llena la tabla con los elementos a llenar.
+	 */
+	public void populate() {
 		Consultas.actualizarDatos();
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("ID del juicio");
-		dtm.addColumn("ID juicio anterior");
-		dtm.addColumn("Fecha de Inicio");
-		dtm.addColumn("Fecha de finalizacion");
-		dtm.addColumn("Localidad");
-		dtm.addColumn("ID de denuncia");
+		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
+			private static final long serialVersionUID = -9003045890991085220L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		// Iteramos y añadimos cada elemento a la tabla
 		for (Juicio j : GestionJuicio.juicios) {
 			dtm.addRow(new Object[] { j.idJuicio, j.juicioAnterior, j.fechaInicio, j.fechaFinalizacion, j.localidad,
 					j.idDenuncia });
 		}
 		table.setModel(dtm);
-
 	}
-
 }

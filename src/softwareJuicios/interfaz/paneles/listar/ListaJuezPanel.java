@@ -15,47 +15,56 @@ import softwareJuicios.entidades.Juez;
 import softwareJuicios.gestion.GestionJuez;
 import softwareJuicios.operaciones.Consultas;
 
+/***
+ * Panel con una tabla que muestra jueces.
+ */
 public class ListaJuezPanel extends JPanel {
-
 	private static final long serialVersionUID = 4399415890397369410L;
+	public static final Object[] TABLE_COLUMNS = new Object[] { "DNI", "Nombre", "Apellidos" };
 
 	public JTable table;
+	private JButton bAction;
+	private JScrollPane scrollPane;
 
-	/**
-	 * Create the panel.
-	 */
 	public ListaJuezPanel() {
 		setBorder(new TitledBorder(null, "Lista de jueces", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
-		JButton btnNewButton = new JButton("Actualizar");
-		btnNewButton.addActionListener(new ActionListener() {
+		bAction = new JButton("Actualizar");
+		bAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				populate();
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		add(btnNewButton, "cell 0 1,growx");
+		add(bAction, "cell 0 1,growx");
 
+		// Llenar la tabla con datos
 		populate();
 	}
 
-	private void populate() {
+	/***
+	 * Llena la tabla con los elementos a llenar.
+	 */
+	public void populate() {
 		Consultas.actualizarDatos();
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Dni juez");
-		dtm.addColumn("nombre");
-		dtm.addColumn("Apellidos");
+		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
+			private static final long serialVersionUID = -9003045890991085220L;
 
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		// Iteramos y añadimos cada elemento a la tabla
 		for (Juez j : GestionJuez.jueces) {
 			dtm.addRow(new Object[] { j.dniJuez, j.nombre, j.apellidos });
 		}
 		table.setModel(dtm);
-
 	}
 }
