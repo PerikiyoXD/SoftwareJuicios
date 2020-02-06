@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +27,8 @@ public class ListaJuicioPanel extends JPanel {
 	public JTable table;
 	private JButton bAction;
 	private JScrollPane scrollPane;
+	private JButton bInsert;
+	private JButton bDelete;
 
 	public ListaJuicioPanel() {
 		setBorder(new TitledBorder(null, "Lista de juicios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -34,7 +37,7 @@ public class ListaJuicioPanel extends JPanel {
 		bAction = new JButton("Actualizar");
 		bAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				populate();
+				doUpdate();
 			}
 		});
 
@@ -43,15 +46,43 @@ public class ListaJuicioPanel extends JPanel {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+
+		bInsert = new JButton("Insertar");
+		add(bInsert, "flowx,cell 0 1");
 		add(bAction, "cell 0 1,growx");
 
-		populate();
+		bDelete = new JButton("Eliminar");
+		bDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doDelete();
+			}
+		});
+		add(bDelete, "cell 0 1");
+
+		doUpdate();
+	}
+
+	protected void doDelete() {
+		int selectedRow = table.getSelectedRow();
+		int idJuicio = Integer.parseInt((String) table.getValueAt(selectedRow, 0));
+
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");
+			return;
+		}
+
+		for (Juicio j : GestionJuicio.juicios) {
+			if (j.idJuicio == idJuicio) {
+				GestionJuicio.baja(j);
+				return;
+			}
+		}
 	}
 
 	/***
 	 * Llena la tabla con los elementos a llenar.
 	 */
-	public void populate() {
+	public void doUpdate() {
 		Consultas.actualizarDatos();
 		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
 			private static final long serialVersionUID = -9003045890991085220L;

@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.gestion.GestionDenuncia;
+import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.operaciones.Consultas;
 
 /***
@@ -25,19 +26,19 @@ public class ListaDenunciaPanel extends JPanel {
 			"Descripción", "Fecha formalización" };
 
 	public JTable table;
-	private JButton bAction;
+	private JButton bUpdate;
 	private JScrollPane scrollPane;
-	private JButton btnEliminar;
-	private JButton btnAadir;
+	private JButton bDelete;
+	private JButton bInsert;
 
 	public ListaDenunciaPanel() {
 		setBorder(new TitledBorder(null, "Lista de denuncias", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
 
-		bAction = new JButton("Actualizar");
-		bAction.addActionListener(new ActionListener() {
+		bUpdate = new JButton("Actualizar");
+		bUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				populate();
+				doUpdate();
 			}
 		});
 
@@ -47,27 +48,40 @@ public class ListaDenunciaPanel extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 
-		btnAadir = new JButton("A\u00F1adir");
-		add(btnAadir, "flowx,cell 0 1");
-		add(bAction, "cell 0 1,growx");
+		bInsert = new JButton("Insertar");
+		bInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doInsert();
+			}
+		});
+		add(bInsert, "flowx,cell 0 1");
+		add(bUpdate, "cell 0 1,growx");
 
-		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
+		bDelete = new JButton("Eliminar");
+		bDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doDelete();
 			}
 		});
-		add(btnEliminar, "cell 0 1");
+		add(bDelete, "cell 0 1");
 
 		// Llenar la tabla con datos
-		populate();
+		doUpdate();
 	}
 
+	/***
+	 * Lógica de inserción
+	 */
+	protected void doInsert() {
+		VentanaPrincipal.doAddDenuncias();
+	}
+
+	/***
+	 * Lógica de eliminación
+	 */
 	protected void doDelete() {
 		int selectedRow = table.getSelectedRow();
 		int idDenuncia = (int) table.getValueAt(selectedRow, 0);
-
-		Denuncia denunciaEliminar = null;
 
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar");
@@ -76,18 +90,16 @@ public class ListaDenunciaPanel extends JPanel {
 
 		for (Denuncia d : GestionDenuncia.denuncias) {
 			if (d.idDenuncia == idDenuncia) {
-				denunciaEliminar = d;
 				GestionDenuncia.baja(d);
 				return;
 			}
 		}
-
 	}
 
 	/***
 	 * Llena la tabla con los elementos a llenar.
 	 */
-	public void populate() {
+	public void doUpdate() {
 		Consultas.actualizarDatos();
 		DefaultTableModel dtm = new DefaultTableModel(null, TABLE_COLUMNS) {
 			private static final long serialVersionUID = -9003045890991085220L;

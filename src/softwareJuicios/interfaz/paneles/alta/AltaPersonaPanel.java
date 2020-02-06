@@ -12,6 +12,8 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionPersona;
+import softwareJuicios.interfaz.VentanaPrincipal;
+import softwareJuicios.interfaz.paneles.listar.ListaPersonaPanel;
 
 public class AltaPersonaPanel extends JPanel {
 	private static final long serialVersionUID = -9197532968226095389L;
@@ -50,20 +52,21 @@ public class AltaPersonaPanel extends JPanel {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doAction();
+				doInsert();
 			}
 		});
 		add(btnNewButton, "cell 0 4,growx");
 
 	}
 
-	protected void doAction() {
+	protected void doInsert() {
 		String dni = tfDNI.getText();
 		String nombre = tfNombre.getText();
 		String apellido = tfApellido.getText();
 
 		Persona persona = new Persona(dni, nombre, apellido);
 		GestionPersona.alta(persona);
+		((ListaPersonaPanel) VentanaPrincipal.internalFrameListPersonas.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }

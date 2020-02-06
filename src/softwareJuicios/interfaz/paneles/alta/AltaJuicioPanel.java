@@ -22,6 +22,8 @@ import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.entidades.Juicio;
 import softwareJuicios.gestion.GestionDenuncia;
 import softwareJuicios.gestion.GestionJuicio;
+import softwareJuicios.interfaz.VentanaPrincipal;
+import softwareJuicios.interfaz.paneles.listar.ListaJuicioPanel;
 import softwareJuicios.operaciones.Consultas;
 
 public class AltaJuicioPanel extends JPanel {
@@ -74,7 +76,7 @@ public class AltaJuicioPanel extends JPanel {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doAction();
+				doInsert();
 			}
 		});
 		add(btnNewButton, "cell 0 6 2 1,growx");
@@ -100,7 +102,7 @@ public class AltaJuicioPanel extends JPanel {
 		cbIdDenuncia.setModel((ComboBoxModel) modeloDenuncia);
 	}
 
-	public void doAction() {
+	public void doInsert() {
 		int cuenta = Consultas.count(Juicio.class);
 		int idJuicio = cuenta + 1;
 		Denuncia denuncia = (Denuncia) cbIdDenuncia.getSelectedItem();
@@ -112,6 +114,7 @@ public class AltaJuicioPanel extends JPanel {
 		Juicio juicio = new Juicio(idJuicio, idDenuncia, new java.sql.Date(fechaInicio.getTime()),
 				(java.sql.Date) fechaFinalizacion, localidad, finalizado, juicioAnterior);
 		GestionJuicio.alta(juicio);
+		((ListaJuicioPanel) VentanaPrincipal.internalFrameListJuicios.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }
