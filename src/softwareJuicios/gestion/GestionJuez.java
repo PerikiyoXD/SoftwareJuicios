@@ -17,7 +17,7 @@ public class GestionJuez {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
-		Consultas.finalizar();
+		
 	}
 
 	public static void baja(Juez juez) {
@@ -27,7 +27,7 @@ public class GestionJuez {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		Consultas.finalizar();
+		
 	}
 
 	public static void modificar(Juez juez,String campo[],String dato[],String id) {
@@ -40,7 +40,7 @@ public class GestionJuez {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		Consultas.finalizar();
+		
 	}
 
 	public static String listar() {
@@ -49,7 +49,7 @@ public class GestionJuez {
 		for (Juez juez : jueces) {
 			mensaje += juez.toString() + '\n';
 		}
-		Consultas.finalizar();
+		
 		return mensaje;
 
 	}

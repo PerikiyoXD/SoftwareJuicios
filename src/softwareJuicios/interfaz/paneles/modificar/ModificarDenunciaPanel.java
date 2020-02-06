@@ -14,7 +14,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Denuncia;
 import softwareJuicios.gestion.GestionDenuncia;
-import softwareJuicios.interfaz.paneles.listar.ListaDenunciaPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaDenunciasPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -29,7 +29,7 @@ public class ModificarDenunciaPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 9013005213706154836L;
 	
-	private ListaDenunciaPanel lista;
+	private ListaDenunciasPanel lista;
 	String []datosAntiguos;
 	String []datosnuevos;
 	private JTextField hintId;
@@ -46,7 +46,7 @@ public class ModificarDenunciaPanel extends JPanel {
 	public ModificarDenunciaPanel() {
 		setBorder(new TitledBorder(null, "Modificar denuncia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[478px][grow]", "[491px,grow][]"));
-		lista= new ListaDenunciaPanel();
+		lista= new ListaDenunciasPanel();
 		add(lista, "cell 0 0,alignx left,aligny top");
 		
 		JButton btnModificarRegistroSeleccionado = new JButton("Modificar registro seleccionado");

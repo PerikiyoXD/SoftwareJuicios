@@ -15,7 +15,7 @@ import softwareJuicios.entidades.Juez;
 import softwareJuicios.entidades.Persona;
 import softwareJuicios.gestion.GestionJuez;
 import softwareJuicios.gestion.GestionPersona;
-import softwareJuicios.interfaz.paneles.listar.ListaDenunciaPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaDenunciasPanel;
 
 
 
@@ -26,7 +26,7 @@ public class ModificarPersonaPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 9013005213706154836L;
 	
-	private ListaDenunciaPanel lista;
+	private ListaDenunciasPanel lista;
 	public String datos[];
 	public String datosAntiguos[];
 	private JTextField hintDni;
@@ -40,7 +40,7 @@ public class ModificarPersonaPanel extends JPanel {
 	public ModificarPersonaPanel() {
 		setBorder(new TitledBorder(null, "Modificar denuncia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[478px][grow]", "[491px,grow][]"));
-		lista= new ListaDenunciaPanel();
+		lista= new ListaDenunciasPanel();
 		add(lista, "cell 0 0,alignx left,aligny top");
 
 		JPanel panelNuevoDatos = new JPanel();

@@ -8,7 +8,7 @@ import softwareJuicios.entidades.Juez;
 import softwareJuicios.entidades.Juicio;
 import softwareJuicios.gestion.GestionJuez;
 import softwareJuicios.gestion.GestionJuicio;
-import softwareJuicios.interfaz.paneles.listar.ListaJuicioPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaJuiciosPanel;
 import softwareJuicios.operaciones.Consultas;
 
 import javax.swing.JButton;
@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class ModificarJuicioPanel extends JPanel {
-	public ListaJuicioPanel lista;
+	public ListaJuiciosPanel lista;
 	public String datos[];
 	public String datosAntiguos[];
 	private JTextField hintJuicioAnterior;
@@ -41,7 +41,7 @@ public class ModificarJuicioPanel extends JPanel {
 	public ModificarJuicioPanel() {
 		setBorder(new TitledBorder(null, "Modificar juicio", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[478px][grow]", "[491px,grow][]"));
-		lista = new ListaJuicioPanel();
+		lista = new ListaJuiciosPanel();
 		add(lista, "cell 0 0,alignx left,aligny top");
 		
 		JPanel panel = new JPanel();

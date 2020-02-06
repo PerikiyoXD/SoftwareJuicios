@@ -13,11 +13,11 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.gestion.GestionJuez;
-import softwareJuicios.interfaz.paneles.listar.ListaJuezPanel;
+import softwareJuicios.interfaz.paneles.listar.ListaJuecesPanel;
 
 public class ModificarJuezPanel extends JPanel {
 
-	public ListaJuezPanel lista;
+	public ListaJuecesPanel lista;
 	public String datos[];
 	public String datosAntiguos[];
 	private JTextField hintDni;
@@ -32,7 +32,7 @@ public class ModificarJuezPanel extends JPanel {
 	public ModificarJuezPanel() {
 		setBorder(new TitledBorder(null, "Modificar juez", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[478px][grow]", "[491px,grow][]"));
-		lista = new ListaJuezPanel();
+		lista = new ListaJuecesPanel();
 		add(lista, "cell 0 0,alignx left,aligny top");
 
 		JPanel panelNuevoDatos = new JPanel();
