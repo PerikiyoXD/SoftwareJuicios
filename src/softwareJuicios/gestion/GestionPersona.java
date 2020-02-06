@@ -22,7 +22,7 @@ public class GestionPersona {
 	public static void baja(Persona persona) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(persona)) {
-			Consultas.borrar(persona);
+			Consultas.borrar(persona,persona.getDni());
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

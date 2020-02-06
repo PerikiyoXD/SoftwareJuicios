@@ -23,7 +23,7 @@ public class GestionJuez {
 	public static void baja(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-			Consultas.borrar(juez);
+			Consultas.borrar(juez,juez.getDniJuez());
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}

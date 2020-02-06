@@ -70,19 +70,32 @@ public class Consultas {
 		finalizar();
 	}
 
-	public static void borrar(Object object) {
+	public static void borrar(Object object,Object id) {
 		ConectorNeodatis.abrirBaseDatos();
+		IQuery query;
 		if (object instanceof Persona) {
-			ConectorNeodatis.baseDatos.delete((Persona) object);
+			query=new CriteriaQuery(Persona.class,Where.equal("dni", id));
+			Objects<Persona> objetos= ConectorNeodatis.baseDatos.getObjects(query);
+			Persona aux=objetos.getFirst();
+			ConectorNeodatis.baseDatos.delete(aux);
 		}
 		if (object instanceof Denuncia) {
-			ConectorNeodatis.baseDatos.delete((Denuncia) object);
+			query=new CriteriaQuery(Denuncia.class,Where.equal("idDenuncia", id));
+			Objects<Denuncia> objetos= ConectorNeodatis.baseDatos.getObjects(query);
+			Denuncia aux=objetos.getFirst();
+			ConectorNeodatis.baseDatos.delete(aux);
 		}
 		if (object instanceof Juicio) {
-			ConectorNeodatis.baseDatos.delete((Juicio) object);
+			query=new CriteriaQuery(Juicio.class,Where.equal("idJuicio", id));
+			Objects<Juicio> objetos= ConectorNeodatis.baseDatos.getObjects(query);
+			Juicio aux=objetos.getFirst();
+			ConectorNeodatis.baseDatos.delete(aux);
 		}
 		if (object instanceof Juez) {
-			ConectorNeodatis.baseDatos.delete((Juez) object);
+			query=new CriteriaQuery(Juez.class,Where.equal("dniJuez", id));
+			Objects<Juez> objetos= ConectorNeodatis.baseDatos.getObjects(query);
+			Juez aux=objetos.getFirst();
+			ConectorNeodatis.baseDatos.delete(aux);
 		}
 		ConectorNeodatis.cerrarBaseDatos();
 	}
@@ -249,7 +262,7 @@ public class Consultas {
 			}
 		}
 		else if (objeto instanceof Juez) {
-			query = new CriteriaQuery(Juez.class, Where.equal("dni", id));
+			query = new CriteriaQuery(Juez.class, Where.equal("dniJuez", id));
 			Objects<Juez> objetos = ConectorNeodatis.baseDatos.getObjects(query);
 			Juez aux = (Juez) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
