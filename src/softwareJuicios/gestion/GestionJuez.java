@@ -23,17 +23,20 @@ public class GestionJuez {
 	public static void baja(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-			Consultas.borrar(juez);
+			Consultas.borrar(juez,juez.getDniJuez());
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
 		Consultas.finalizar();
 	}
 
-	public static void modificar(Juez juez) {
+	public static void modificar(Juez juez,String campo[],String dato[],String id) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-			Consultas.modificar(juez);
+		for (int i = 0; i < dato.length; i++) {
+			Consultas.modificar(juez, campo[i], dato[i], id);
+		}
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
