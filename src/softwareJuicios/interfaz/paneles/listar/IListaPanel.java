@@ -17,4 +17,8 @@ public interface IListaPanel {
 	 */
 	void doUpdate();
 
+	/***
+	 * Lógica de modificación
+	 */
+	void doModify();
 }

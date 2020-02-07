@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.ICriterion;
 import org.neodatis.odb.core.query.criteria.Where;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
@@ -101,7 +102,6 @@ public class Consultas {
 	}
 
 	public static boolean comprobarRegistro(Object object) {
-
 		actualizarDatos();
 		ConectorNeodatis.abrirBaseDatos();
 
@@ -144,11 +144,45 @@ public class Consultas {
 		return false;
 	}
 
+	public static void modificar(Juez nuevoJuez) {
+		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
+
+		ICriterion criteria = Where.equal("dniJuez", nuevoJuez.dniJuez);
+		Objects<Object> objects = ConectorNeodatis.baseDatos.getObjects(new CriteriaQuery(Juez.class, criteria));
+		Juez juezEditable = (Juez) objects.getFirst();
+		// Editar campos
+		juezEditable.setNombre(nuevoJuez.getNombre());
+		juezEditable.setApellidos(nuevoJuez.getApellidos());
+		// Almacenar
+		ConectorNeodatis.baseDatos.store(nuevoJuez);
+		ConectorNeodatis.baseDatos.commit();
+
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
+	public static void modificar(Persona nuevaPersona) {
+		actualizarDatos();
+		ConectorNeodatis.abrirBaseDatos();
+
+		ICriterion criteria = Where.equal("dni", nuevaPersona.dni);
+		Objects<Object> objects = ConectorNeodatis.baseDatos.getObjects(new CriteriaQuery(Persona.class, criteria));
+		Persona personaEditable = (Persona) objects.getFirst();
+		// Editar campos
+		personaEditable.setNombre(nuevaPersona.getNombre());
+		personaEditable.setApellidos(nuevaPersona.getApellidos());
+		// Almacenar
+		ConectorNeodatis.baseDatos.store(nuevaPersona);
+		ConectorNeodatis.baseDatos.commit();
+
+		ConectorNeodatis.cerrarBaseDatos();
+	}
+
 	public static void modificar(Object objeto, String campo, String dato, String id) {
 		IQuery query;
 		if (objeto instanceof Persona) {
 
-			query = new CriteriaQuery(Persona.class, org.neodatis.odb.core.query.criteria.Where.equal("dni", id));
+			query = new CriteriaQuery(Persona.class, Where.equal("dni", id));
 			Persona aux = (Persona) ConectorNeodatis.baseDatos.getObjects(query).getFirst();
 			switch (campo) {
 			case "nombre":
@@ -156,7 +190,7 @@ public class Consultas {
 				ConectorNeodatis.baseDatos.store(aux);
 				break;
 			case "apellido":
-				aux.setApellido(dato);
+				aux.setApellidos(dato);
 				ConectorNeodatis.baseDatos.store(aux);
 
 			default:

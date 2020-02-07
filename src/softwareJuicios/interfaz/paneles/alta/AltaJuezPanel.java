@@ -1,6 +1,8 @@
 package softwareJuicios.interfaz.paneles.alta;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,7 +17,7 @@ import softwareJuicios.gestion.GestionJuez;
 import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.interfaz.paneles.listar.ListaJuecesPanel;
 
-public class AltaJuezPanel extends JPanel {
+public class AltaJuezPanel extends JPanel implements IAltaPanel {
 	private static final long serialVersionUID = -9197532968226095389L;
 	private JTextField tfDNI;
 	private JTextField tfNombre;
@@ -49,20 +51,38 @@ public class AltaJuezPanel extends JPanel {
 		tfApellido.setColumns(10);
 
 		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doClean();
+			}
+		});
 		add(btnLimpiar, "flowx,cell 0 4 2 1,growx");
 
 		JButton btnNewButton = new JButton("Aceptar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doInsert();
+			}
+		});
 		add(btnNewButton, "cell 0 4,growx");
 
 	}
 
-	protected void doInsert() {
+	@Override
+	public void doClean() {
+		tfDNI.setText("");
+		tfNombre.setText("");
+		tfApellido.setText("");
+	}
+
+	@Override
+	public void doInsert() {
 		String dni = tfDNI.getText();
 		String nombre = tfNombre.getText();
 		String apellido = tfApellido.getText();
 
 		Juez juez = new Juez(dni, nombre, apellido);
 		GestionJuez.alta(juez);
-		((ListaJuecesPanel) VentanaPrincipal.internalFrameListJueces.getContentPane().getComponent(0)).doUpdate();
+		((ListaJuecesPanel) VentanaPrincipal.intFrameListaJueces.getContentPane().getComponent(0)).doUpdate();
 	}
 }

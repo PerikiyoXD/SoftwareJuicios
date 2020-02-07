@@ -114,7 +114,7 @@ public class AltaJuicioPanel extends JPanel {
 		Juicio juicio = new Juicio(idJuicio, idDenuncia, new java.sql.Date(fechaInicio.getTime()),
 				(java.sql.Date) fechaFinalizacion, localidad, finalizado, juicioAnterior);
 		GestionJuicio.alta(juicio);
-		((ListaJuiciosPanel) VentanaPrincipal.internalFrameListJuicios.getContentPane().getComponent(0)).doUpdate();
+		((ListaJuiciosPanel) VentanaPrincipal.intFrameListaJuicios.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }

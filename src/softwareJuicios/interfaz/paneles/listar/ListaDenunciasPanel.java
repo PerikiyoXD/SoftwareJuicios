@@ -31,17 +31,11 @@ public class ListaDenunciasPanel extends JPanel implements IListaPanel {
 	private JScrollPane scrollPane;
 	private JButton bDelete;
 	private JButton bInsert;
+	private JButton bModify;
 
 	public ListaDenunciasPanel() {
 		setBorder(new TitledBorder(null, "Lista de denuncias", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
-
-		bUpdate = new JButton("Actualizar");
-		bUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doUpdate();
-			}
-		});
+		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][][]"));
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
@@ -56,7 +50,6 @@ public class ListaDenunciasPanel extends JPanel implements IListaPanel {
 			}
 		});
 		add(bInsert, "flowx,cell 0 1");
-		add(bUpdate, "cell 0 1,growx");
 
 		bDelete = new JButton("Eliminar");
 		bDelete.addActionListener(new ActionListener() {
@@ -64,7 +57,18 @@ public class ListaDenunciasPanel extends JPanel implements IListaPanel {
 				doDelete();
 			}
 		});
+
+		bModify = new JButton("Modificar");
+		add(bModify, "cell 0 1");
 		add(bDelete, "cell 0 1");
+
+		bUpdate = new JButton("Actualizar");
+		bUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doUpdate();
+			}
+		});
+		add(bUpdate, "cell 0 2,growx");
 
 		// Llenar la tabla con datos
 		doUpdate();
@@ -75,7 +79,7 @@ public class ListaDenunciasPanel extends JPanel implements IListaPanel {
 	 */
 	@Override
 	public void doInsert() {
-		VentanaPrincipal.doAddDenuncias();
+		VentanaPrincipal.doInsertDenuncias();
 	}
 
 	/***
@@ -120,5 +124,10 @@ public class ListaDenunciasPanel extends JPanel implements IListaPanel {
 			dtm.addRow(new Object[] { d.idDenuncia, d.dniAcusado, d.dniVictima, d.descripcion, d.fechaFormalizacion });
 		}
 		table.setModel(dtm);
+	}
+
+	@Override
+	public void doModify() {
+		VentanaPrincipal.doModifyDenuncia();
 	}
 }

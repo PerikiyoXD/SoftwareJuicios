@@ -30,17 +30,11 @@ public class ListaPersonasPanel extends JPanel implements IListaPanel {
 	private JScrollPane scrollPane;
 	private JButton bInsert;
 	private JButton bDelete;
+	private JButton bModify;
 
 	public ListaPersonasPanel() {
 		setBorder(new TitledBorder(null, "Lista de personas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
-
-		bUpdate = new JButton("Actualizar");
-		bUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doUpdate();
-			}
-		});
+		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][][]"));
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
@@ -55,7 +49,6 @@ public class ListaPersonasPanel extends JPanel implements IListaPanel {
 			}
 		});
 		add(bInsert, "flowx,cell 0 1");
-		add(bUpdate, "cell 0 1,growx");
 
 		bDelete = new JButton("Eliminar");
 		bDelete.addActionListener(new ActionListener() {
@@ -63,7 +56,18 @@ public class ListaPersonasPanel extends JPanel implements IListaPanel {
 				doDelete();
 			}
 		});
+
+		bModify = new JButton("Modificar");
+		add(bModify, "cell 0 1");
 		add(bDelete, "cell 0 1");
+
+		bUpdate = new JButton("Actualizar");
+		bUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doUpdate();
+			}
+		});
+		add(bUpdate, "cell 0 2");
 
 		// Llenar la tabla con datos
 		doUpdate();
@@ -96,7 +100,7 @@ public class ListaPersonasPanel extends JPanel implements IListaPanel {
 	 * Lógica de inserción
 	 */
 	public void doInsert() {
-		VentanaPrincipal.doAddPersonas();
+		VentanaPrincipal.doInsertPersonas();
 	}
 
 	/***
@@ -114,8 +118,13 @@ public class ListaPersonasPanel extends JPanel implements IListaPanel {
 		};
 		// Iteramos y añadimos cada elemento a la tabla
 		for (Persona persona : GestionPersona.personas) {
-			dtm.addRow(new Object[] { persona.dni, persona.nombre, persona.apellido });
+			dtm.addRow(new Object[] { persona.dni, persona.nombre, persona.apellidos });
 		}
 		table.setModel(dtm);
+	}
+
+	@Override
+	public void doModify() {
+		VentanaPrincipal.doModifyPersona();
 	}
 }
