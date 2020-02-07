@@ -1,125 +1,122 @@
 package softwareJuicios.interfaz.paneles.modificar;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
+import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
 import softwareJuicios.entidades.Juez;
 import softwareJuicios.gestion.GestionJuez;
+import softwareJuicios.interfaz.VentanaPrincipal;
 import softwareJuicios.interfaz.paneles.listar.ListaJuecesPanel;
 
 public class ModificarJuezPanel extends JPanel {
+	private static final long serialVersionUID = -9197532968226095389L;
+	private JTextField tfOldDNI;
+	private JTextField tfOldNombre;
+	private JTextField tfOldApellido;
+	private JTextField tfApellido;
+	private JTextField tfNombre;
+	private JTextField tfDNI;
+	private Juez originalJuez;
+	private JButton bModify;
 
-	public ListaJuecesPanel lista;
-	public String datos[];
-	public String datosAntiguos[];
-	private JTextField hintDni;
-	private JTextField hintNombre;
-	private JTextField hintApellidos;
-	private JTextField nuevoNombre;
-	private JTextField nuevoApallido;
+	public ModificarJuezPanel(Juez juez) {
+		originalJuez = juez;
 
-	/**
-	 * Create the panel.
-	 */
-	public ModificarJuezPanel() {
-		setBorder(new TitledBorder(null, "Modificar juez", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[478px][grow]", "[491px,grow][]"));
-		lista = new ListaJuecesPanel();
-		add(lista, "cell 0 0,alignx left,aligny top");
+		setBorder(null);
+		setLayout(new MigLayout("", "[grow][grow][][grow][grow]", "[][][][][grow][]"));
 
-		JPanel panelNuevoDatos = new JPanel();
-		add(panelNuevoDatos, "cell 1 0,grow");
-		panelNuevoDatos.setLayout(new MigLayout("", "[][grow][grow]", "[][][]"));
+		JLabel lblNewLabel_3 = new JLabel("Datos antiguos");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		add(lblNewLabel_3, "cell 0 0 2 1");
 
-		JLabel lblNewLabel = new JLabel("Dni");
-		panelNuevoDatos.add(lblNewLabel, "cell 0 0,alignx trailing");
+		JLabel lblNuevosDatos = new JLabel("Datos nuevos");
+		lblNuevosDatos.setFont(new Font("Tahoma", Font.BOLD, 11));
+		add(lblNuevosDatos, "cell 3 0 2 1");
 
-		hintDni = new JTextField();
-		hintDni.setEditable(false);
-		panelNuevoDatos.add(hintDni, "cell 1 0,growx,aligny top");
-		hintDni.setColumns(10);
+		JLabel lblNewLabel = new JLabel("DNI");
+		add(lblNewLabel, "cell 0 1,alignx trailing");
 
-		JLabel lblNombre = new JLabel("Nombre");
-		panelNuevoDatos.add(lblNombre, "cell 0 1,alignx trailing");
+		tfOldDNI = new JTextField();
+		tfOldDNI.setEditable(false);
+		add(tfOldDNI, "cell 1 1,growx");
+		tfOldDNI.setColumns(10);
 
-		hintNombre = new JTextField();
-		hintNombre.setEditable(false);
-		panelNuevoDatos.add(hintNombre, "cell 1 1,growx");
-		hintNombre.setColumns(10);
+		JLabel label = new JLabel("DNI");
+		add(label, "cell 3 1,alignx trailing");
 
-		nuevoNombre = new JTextField();
-		panelNuevoDatos.add(nuevoNombre, "cell 2 1,growx");
-		nuevoNombre.setColumns(10);
+		tfDNI = new JTextField();
+		tfDNI.setColumns(10);
+		add(tfDNI, "cell 4 1,growx");
 
-		JLabel lblApellidos = new JLabel("Apellidos");
-		panelNuevoDatos.add(lblApellidos, "cell 0 2,alignx trailing");
+		JLabel lblNewLabel_1 = new JLabel("Nombre");
+		add(lblNewLabel_1, "cell 0 2,alignx trailing");
 
-		hintApellidos = new JTextField();
-		hintApellidos.setEditable(false);
-		panelNuevoDatos.add(hintApellidos, "cell 1 2,growx");
-		hintApellidos.setColumns(10);
+		tfOldNombre = new JTextField();
+		tfOldNombre.setEditable(false);
+		add(tfOldNombre, "cell 1 2,growx");
+		tfOldNombre.setColumns(10);
 
-		nuevoApallido = new JTextField();
-		panelNuevoDatos.add(nuevoApallido, "cell 2 2,growx");
-		nuevoApallido.setColumns(10);
+		JLabel label_1 = new JLabel("Nombre");
+		add(label_1, "cell 3 2,alignx trailing");
 
-		JButton btnModificarRegistro = new JButton("Modificar registro");
-		btnModificarRegistro.addActionListener(new ActionListener() {
+		tfNombre = new JTextField();
+		tfNombre.setColumns(10);
+		add(tfNombre, "cell 4 2,growx");
+
+		JLabel lblNewLabel_2 = new JLabel("Apellido");
+		add(lblNewLabel_2, "cell 0 3,alignx trailing");
+
+		tfOldApellido = new JTextField();
+		tfOldApellido.setEditable(false);
+		add(tfOldApellido, "cell 1 3,growx");
+		tfOldApellido.setColumns(10);
+
+		JLabel label_2 = new JLabel("Apellido");
+		add(label_2, "cell 3 3,alignx trailing");
+
+		tfApellido = new JTextField();
+		tfApellido.setColumns(10);
+		add(tfApellido, "cell 4 3,growx");
+
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		add(separator, "cell 2 0 1 5,growy");
+
+		bModify = new JButton("Aceptar");
+		bModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doAction();
+				doModify();
 			}
 		});
-		add(btnModificarRegistro, "flowx,cell 0 1");
+		add(bModify, "cell 0 5 5 1,growx");
 
-		JButton btnAceptarCambios = new JButton("Aceptar cambios");
-		btnAceptarCambios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doFinaly();
-			}
-		});
-		add(btnAceptarCambios, "cell 0 1");
-
+		feedOldObjectData();
 	}
 
-	private void doFinaly() {
-		String campo[] = null, dato[] = null;
-
-		int i = 0;
-		if (!nuevoNombre.getText().isEmpty()) {
-			campo[i] = "nombre";
-			dato[i] = nuevoNombre.getText();
-			i++;
-
-		} else if (!nuevoApallido.getText().isEmpty()) {
-			campo[i] = "apellido";
-			dato[i] = nuevoApallido.getText();
-			i++;
-
-		}
-		Juez j = new Juez(datosAntiguos[0], dato[0], dato[1]);
-		GestionJuez.modificar(j, campo, dato, "dniJuez");
-
+	private void feedOldObjectData() {
+		tfOldDNI.setText(originalJuez.dniJuez);
+		tfOldNombre.setText(originalJuez.nombre);
+		tfOldApellido.setText(originalJuez.apellidos);
 	}
 
-	private void doAction() {
-		// TODO Auto-generated method stub
-		int i = lista.table.getSelectedRow();
-		if (i == -1) {
-			JOptionPane.showMessageDialog(null, "no ha seleccionado ningun registro");
-		} else {
-			String datosaux[] = { String.valueOf(lista.table.getValueAt(lista.table.getSelectedRow(), 0)),
-					String.valueOf(lista.table.getValueAt(lista.table.getSelectedRow(), 1)),
-					String.valueOf(lista.table.getValueAt(lista.table.getSelectedRow(), 2))};
-			datosAntiguos = datosaux;
-		}
-	}
+	protected void doModify() {
+		String dni = tfOldDNI.getText();
+		String nombre = tfNombre.getText();
+		String apellido = tfApellido.getText();
 
+		Juez juez = new Juez(dni, nombre.isEmpty() ? nombre : tfOldNombre.getText(),
+				apellido.isEmpty() ? apellido : tfOldNombre.getText());
+
+		GestionJuez.modificar(juez);
+		((ListaJuecesPanel) VentanaPrincipal.intFrameListaJueces.getContentPane().getComponent(0)).doUpdate();
+	}
 }

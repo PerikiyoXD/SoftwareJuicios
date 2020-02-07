@@ -123,7 +123,7 @@ public class AltaDenunciaPanel extends JPanel {
 		Date fechaFormalizacion = calendar.getDate();
 		Denuncia denuncia = new Denuncia(dniAcusado, dniVictima, descripcion, idDenuncia, fechaFormalizacion);
 		GestionDenuncia.alta(denuncia);
-		((IListaPanel) VentanaPrincipal.internalFrameListDenuncias.getContentPane().getComponent(0)).doUpdate();
+		((IListaPanel) VentanaPrincipal.intFrameListaDenuncias.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }

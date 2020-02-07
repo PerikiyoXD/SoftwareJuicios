@@ -17,30 +17,27 @@ public class GestionJuez {
 		} else {
 			JOptionPane.showMessageDialog(null, "registro existente");
 		}
-		
+
 	}
 
 	public static void baja(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-			Consultas.borrar(juez,juez.getDniJuez());
+			Consultas.borrar(juez, juez.getDniJuez());
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		
+
 	}
 
-	public static void modificar(Juez juez,String campo[],String dato[],String id) {
+	public static void modificar(Juez juez) {
 		Consultas.actualizarDatos();
 		if (Consultas.comprobarRegistro(juez)) {
-		for (int i = 0; i < dato.length; i++) {
-			Consultas.modificar(juez, campo[i], dato[i], id);
-		}
-			
+			Consultas.modificar(juez);
 		} else {
 			JOptionPane.showMessageDialog(null, "registro no existente");
 		}
-		
+
 	}
 
 	public static String listar() {
@@ -49,7 +46,7 @@ public class GestionJuez {
 		for (Juez juez : jueces) {
 			mensaje += juez.toString() + '\n';
 		}
-		
+
 		return mensaje;
 
 	}

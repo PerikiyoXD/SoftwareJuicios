@@ -35,6 +35,6 @@ public class Juez {
 
 	@Override
 	public String toString() {
-		return "Juez [dniJuez=" + dniJuez + ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
+		return dniJuez + ": " + apellidos + ", " + nombre;
 	}
 }

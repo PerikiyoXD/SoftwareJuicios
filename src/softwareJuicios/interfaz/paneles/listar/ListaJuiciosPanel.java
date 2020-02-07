@@ -31,20 +31,13 @@ public class ListaJuiciosPanel extends JPanel implements IListaPanel {
 	private JScrollPane scrollPane;
 	private JButton bInsert;
 	private JButton bDelete;
+	private JButton bModify;
 
 	public ListaJuiciosPanel() {
 		setBorder(new TitledBorder(null, "Lista de juicios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
-
-		bAction = new JButton("Actualizar");
-		bAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doUpdate();
-			}
-		});
+		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][][][]"));
 
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 0,grow");
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -55,8 +48,6 @@ public class ListaJuiciosPanel extends JPanel implements IListaPanel {
 				doInsert();
 			}
 		});
-		add(bInsert, "flowx,cell 0 1");
-		add(bAction, "cell 0 1,growx");
 
 		bDelete = new JButton("Eliminar");
 		bDelete.addActionListener(new ActionListener() {
@@ -64,16 +55,42 @@ public class ListaJuiciosPanel extends JPanel implements IListaPanel {
 				doDelete();
 			}
 		});
-		add(bDelete, "cell 0 1");
+		add(scrollPane, "cell 0 0,grow");
+		add(bInsert, "flowx,cell 0 2");
+
+		bModify = new JButton("Modificar");
+		bModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doModify();
+			}
+		});
+		add(bModify, "cell 0 2");
+		add(bDelete, "cell 0 2");
+
+		bAction = new JButton("Actualizar");
+		bAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doUpdate();
+			}
+		});
+		add(bAction, "cell 0 3,growx");
 
 		doUpdate();
+	}
+
+	/***
+	 * Lógica de modificación
+	 */
+	public void doModify() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/***
 	 * Lógica de inserción
 	 */
 	public void doInsert() {
-		VentanaPrincipal.doAddJuicios();
+		VentanaPrincipal.doInsertJuicios();
 	}
 
 	/***

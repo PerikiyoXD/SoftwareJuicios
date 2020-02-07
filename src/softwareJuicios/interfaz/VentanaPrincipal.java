@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import softwareJuicios.entidades.Juez;
 import softwareJuicios.interfaz.paneles.alta.AltaDenunciaPanel;
 import softwareJuicios.interfaz.paneles.alta.AltaJuezPanel;
 import softwareJuicios.interfaz.paneles.alta.AltaJuicioPanel;
@@ -20,19 +21,29 @@ import softwareJuicios.interfaz.paneles.listar.ListaDenunciasPanel;
 import softwareJuicios.interfaz.paneles.listar.ListaJuecesPanel;
 import softwareJuicios.interfaz.paneles.listar.ListaJuiciosPanel;
 import softwareJuicios.interfaz.paneles.listar.ListaPersonasPanel;
+import softwareJuicios.interfaz.paneles.modificar.ModificarDenunciaPanel;
+import softwareJuicios.interfaz.paneles.modificar.ModificarJuezPanel;
+import softwareJuicios.interfaz.paneles.modificar.ModificarJuicioPanel;
+import softwareJuicios.interfaz.paneles.modificar.ModificarPersonaPanel;
 
 public class VentanaPrincipal {
 
 	public JFrame frame;
 	public static JDesktopPane desktopPane;
-	public static JInternalFrame internalFrameListJuicios;
-	public static JInternalFrame internalFrameListJueces;
-	public static JInternalFrame internalFrameListPersonas;
-	public static JInternalFrame internalFrameListDenuncias;
-	public static JInternalFrame internalFrameAltaJuicios;
-	public static JInternalFrame internalFrameAltaJueces;
-	public static JInternalFrame internalFrameAltaPersonas;
-	public static JInternalFrame internalFrameAltaDenuncias;
+	public static JInternalFrame intFrameListaJuicios;
+	public static JInternalFrame intFrameListaJueces;
+	public static JInternalFrame intFrameListaPersonas;
+	public static JInternalFrame intFrameListaDenuncias;
+
+	public static JInternalFrame intFrameAltaJuicio;
+	public static JInternalFrame intFrameAltaJuez;
+	public static JInternalFrame intFrameAltaPersona;
+	public static JInternalFrame intFrameAltaDenuncia;
+
+	public static JInternalFrame intFrameModifyJuicio;
+	public static JInternalFrame intFrameModifyJuez;
+	public static JInternalFrame intFrameModifyPersona;
+	public static JInternalFrame intFrameModifyDenuncia;
 
 	public VentanaPrincipal() {
 		initialize();
@@ -56,161 +67,221 @@ public class VentanaPrincipal {
 		JMenu mnAbrir = new JMenu("Abrir");
 		mnAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doOpenDenuncias();
+				doListDenuncias();
 			}
 		});
 		menuBar.add(mnAbrir);
-
-		JMenuItem mntmVer = new JMenuItem("Denuncias");
-		mntmVer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doOpenDenuncias();
-			}
-		});
-		mnAbrir.add(mntmVer);
-
-		JMenuItem mntmPersonas = new JMenuItem("Personas");
-		mnAbrir.add(mntmPersonas);
-		mntmPersonas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doOpenPersonas();
-			}
-		});
+		
+				JMenuItem mntmPersonas = new JMenuItem("Personas");
+				mnAbrir.add(mntmPersonas);
+				mntmPersonas.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						doListPersonas();
+					}
+				});
+		
+				JMenuItem mntmJueces = new JMenuItem("Jueces");
+				mnAbrir.add(mntmJueces);
+				mntmJueces.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						doListJueces();
+					}
+				});
 
 		JMenuItem mntmJuicios = new JMenuItem("Juicios");
 		mnAbrir.add(mntmJuicios);
 		mntmJuicios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doOpenJuicios();
+				doListJuicios();
 			}
 		});
-
-		JMenuItem mntmJueces = new JMenuItem("Jueces");
-		mnAbrir.add(mntmJueces);
-		mntmJueces.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doOpenJueces();
-			}
-		});
+		
+				JMenuItem mntmVer = new JMenuItem("Denuncias");
+				mntmVer.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						doListDenuncias();
+					}
+				});
+				mnAbrir.add(mntmVer);
 	}
 
-	public static void doAddDenuncias() {
-		if (internalFrameAltaDenuncias == null) {
-			internalFrameAltaDenuncias = new JInternalFrame("NUEVA DENUNCIA", true, true, false, false);
-			internalFrameAltaDenuncias.getContentPane().add(new AltaDenunciaPanel(), BorderLayout.CENTER);
+	public static void doInsertDenuncias() {
+		if (intFrameAltaDenuncia == null) {
+			intFrameAltaDenuncia = new JInternalFrame("NUEVA DENUNCIA", true, true, false, false);
+			intFrameAltaDenuncia.getContentPane().add(new AltaDenunciaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaDenuncias.setBounds(0, 0, 600, 450);
+		intFrameAltaDenuncia.setBounds(0, 0, 600, 450);
 
-		if (internalFrameAltaDenuncias.getParent() == null) {
-			desktopPane.add(internalFrameAltaDenuncias);
+		if (intFrameAltaDenuncia.getParent() == null) {
+			desktopPane.add(intFrameAltaDenuncia);
 		}
 
-		internalFrameAltaDenuncias.setVisible(true);
-		internalFrameAltaDenuncias.moveToFront();
+		intFrameAltaDenuncia.setVisible(true);
+		intFrameAltaDenuncia.moveToFront();
 	}
 
-	public static void doAddPersonas() {
-		if (internalFrameAltaPersonas == null) {
-			internalFrameAltaPersonas = new JInternalFrame("NUEVA PERSONA", true, true, false, false);
-			internalFrameAltaPersonas.getContentPane().add(new AltaPersonaPanel(), BorderLayout.CENTER);
+	public static void doInsertJueces() {
+		if (intFrameAltaJuez == null) {
+			intFrameAltaJuez = new JInternalFrame("NUEVO JUEZ", true, true, false, false);
+			intFrameAltaJuez.getContentPane().add(new AltaJuezPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaPersonas.setBounds(0, 0, 600, 450);
+		intFrameAltaJuez.setBounds(0, 0, 600, 450);
 
-		if (internalFrameAltaPersonas.getParent() == null) {
-			desktopPane.add(internalFrameAltaPersonas);
+		if (intFrameAltaJuez.getParent() == null) {
+			desktopPane.add(intFrameAltaJuez);
 		}
 
-		internalFrameAltaPersonas.setVisible(true);
-		internalFrameAltaPersonas.moveToFront();
+		intFrameAltaJuez.setVisible(true);
+		intFrameAltaJuez.moveToFront();
 	}
 
-	public static void doAddJuicios() {
-		if (internalFrameAltaJuicios == null) {
-			internalFrameAltaJuicios = new JInternalFrame("NUEVO JUICIO", true, true, false, false);
-			internalFrameAltaJuicios.getContentPane().add(new AltaJuicioPanel(), BorderLayout.CENTER);
+	public static void doInsertJuicios() {
+		if (intFrameAltaJuicio == null) {
+			intFrameAltaJuicio = new JInternalFrame("NUEVO JUICIO", true, true, false, false);
+			intFrameAltaJuicio.getContentPane().add(new AltaJuicioPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaJuicios.setBounds(0, 0, 600, 450);
+		intFrameAltaJuicio.setBounds(0, 0, 600, 450);
 
-		if (internalFrameAltaJuicios.getParent() == null) {
-			desktopPane.add(internalFrameAltaJuicios);
+		if (intFrameAltaJuicio.getParent() == null) {
+			desktopPane.add(intFrameAltaJuicio);
 		}
 
-		internalFrameAltaJueces.setVisible(true);
-		internalFrameAltaJueces.moveToFront();
+		intFrameAltaJuicio.setVisible(true);
+		intFrameAltaJuicio.moveToFront();
 	}
 
-	public static void doAddJueces() {
-		if (internalFrameAltaJueces == null) {
-			internalFrameAltaJueces = new JInternalFrame("NUEVO JUEZ", true, true, false, false);
-			internalFrameAltaJueces.getContentPane().add(new AltaJuezPanel(), BorderLayout.CENTER);
+	public static void doInsertPersonas() {
+		if (intFrameAltaPersona == null) {
+			intFrameAltaPersona = new JInternalFrame("NUEVA PERSONA", true, true, false, false);
+			intFrameAltaPersona.getContentPane().add(new AltaPersonaPanel(), BorderLayout.CENTER);
 		}
-		internalFrameAltaJueces.setBounds(0, 0, 600, 450);
+		intFrameAltaPersona.setBounds(0, 0, 600, 450);
 
-		if (internalFrameAltaJueces.getParent() == null) {
-			desktopPane.add(internalFrameAltaJueces);
+		if (intFrameAltaPersona.getParent() == null) {
+			desktopPane.add(intFrameAltaPersona);
 		}
 
-		internalFrameAltaJueces.setVisible(true);
-		internalFrameAltaJueces.moveToFront();
+		intFrameAltaPersona.setVisible(true);
+		intFrameAltaPersona.moveToFront();
 	}
 
-	protected void doOpenPersonas() {
-		if (internalFrameListPersonas == null) {
-			internalFrameListPersonas = new JInternalFrame("PERSONAS", true, true, false, false);
-			internalFrameListPersonas.getContentPane().add(new ListaPersonasPanel(), BorderLayout.CENTER);
+	protected void doListDenuncias() {
+		if (intFrameListaDenuncias == null) {
+			intFrameListaDenuncias = new JInternalFrame("DENUNCIAS", true, true, false, false);
+			intFrameListaDenuncias.getContentPane().add(new ListaDenunciasPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListPersonas.setBounds(0, 0, 600, 450);
+		intFrameListaDenuncias.setBounds(0, 0, 600, 450);
 
-		if (internalFrameListPersonas.getParent() == null) {
-			desktopPane.add(internalFrameListPersonas);
+		if (intFrameListaDenuncias.getParent() == null) {
+			desktopPane.add(intFrameListaDenuncias);
 		}
 
-		internalFrameListPersonas.setVisible(true);
-		internalFrameListPersonas.moveToFront();
+		intFrameListaDenuncias.setVisible(true);
+		intFrameListaDenuncias.moveToFront();
 	}
 
-	protected void doOpenDenuncias() {
-		if (internalFrameListDenuncias == null) {
-			internalFrameListDenuncias = new JInternalFrame("DENUNCIAS", true, true, false, false);
-			internalFrameListDenuncias.getContentPane().add(new ListaDenunciasPanel(), BorderLayout.CENTER);
+	protected void doListJueces() {
+		if (intFrameListaJueces == null) {
+			intFrameListaJueces = new JInternalFrame("JUECES", true, true, false, false);
+			intFrameListaJueces.getContentPane().add(new ListaJuecesPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListDenuncias.setBounds(0, 0, 600, 450);
+		intFrameListaJueces.setBounds(0, 0, 600, 450);
 
-		if (internalFrameListDenuncias.getParent() == null) {
-			desktopPane.add(internalFrameListDenuncias);
+		if (intFrameListaJueces.getParent() == null) {
+			desktopPane.add(intFrameListaJueces);
 		}
 
-		internalFrameListDenuncias.setVisible(true);
-		internalFrameListDenuncias.moveToFront();
+		intFrameListaJueces.setVisible(true);
+		intFrameListaJueces.moveToFront();
 	}
 
-	protected void doOpenJuicios() {
-		if (internalFrameListJuicios == null) {
-			internalFrameListJuicios = new JInternalFrame("JUICIOS", true, true, false, false);
-			internalFrameListJuicios.getContentPane().add(new ListaJuiciosPanel(), BorderLayout.CENTER);
+	protected void doListJuicios() {
+		if (intFrameListaJuicios == null) {
+			intFrameListaJuicios = new JInternalFrame("JUICIOS", true, true, false, false);
+			intFrameListaJuicios.getContentPane().add(new ListaJuiciosPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListJuicios.setBounds(0, 0, 600, 450);
+		intFrameListaJuicios.setBounds(0, 0, 600, 450);
 
-		if (internalFrameListJuicios.getParent() == null) {
-			desktopPane.add(internalFrameListJuicios);
+		if (intFrameListaJuicios.getParent() == null) {
+			desktopPane.add(intFrameListaJuicios);
 		}
 
-		internalFrameListJuicios.setVisible(true);
-		internalFrameListJuicios.moveToFront();
+		intFrameListaJuicios.setVisible(true);
+		intFrameListaJuicios.moveToFront();
 	}
 
-	protected void doOpenJueces() {
-		if (internalFrameListJueces == null) {
-			internalFrameListJueces = new JInternalFrame("JUECES", true, true, false, false);
-			internalFrameListJueces.getContentPane().add(new ListaJuecesPanel(), BorderLayout.CENTER);
+	protected void doListPersonas() {
+		if (intFrameListaPersonas == null) {
+			intFrameListaPersonas = new JInternalFrame("PERSONAS", true, true, false, false);
+			intFrameListaPersonas.getContentPane().add(new ListaPersonasPanel(), BorderLayout.CENTER);
 		}
-		internalFrameListJueces.setBounds(0, 0, 600, 450);
+		intFrameListaPersonas.setBounds(0, 0, 600, 450);
 
-		if (internalFrameListJueces.getParent() == null) {
-			desktopPane.add(internalFrameListJueces);
+		if (intFrameListaPersonas.getParent() == null) {
+			desktopPane.add(intFrameListaPersonas);
 		}
 
-		internalFrameListJueces.setVisible(true);
-		internalFrameListJueces.moveToFront();
+		intFrameListaPersonas.setVisible(true);
+		intFrameListaPersonas.moveToFront();
+	}
+
+	public static void doModifyDenuncia() {
+		if (intFrameModifyDenuncia == null) {
+			intFrameModifyDenuncia = new JInternalFrame("MODIFICAR DENUNCIA", true, true, false, false);
+			intFrameModifyDenuncia.getContentPane().add(new ModificarDenunciaPanel(), BorderLayout.CENTER);
+		}
+		intFrameModifyDenuncia.setBounds(0, 0, 600, 450);
+
+		if (intFrameModifyDenuncia.getParent() == null) {
+			desktopPane.add(intFrameModifyDenuncia);
+		}
+
+		intFrameModifyDenuncia.setVisible(true);
+		intFrameModifyDenuncia.moveToFront();
+	}
+
+	public static void doModifyJuez(Juez juez) {
+		if (intFrameModifyJuez == null) {
+			intFrameModifyJuez = new JInternalFrame("MODIFICAR JUEZ", true, true, false, false);
+			intFrameModifyJuez.getContentPane().add(new ModificarJuezPanel(juez), BorderLayout.CENTER);
+		}
+		intFrameModifyJuez.setBounds(0, 0, 600, 450);
+
+		if (intFrameModifyJuez.getParent() == null) {
+			desktopPane.add(intFrameModifyJuez);
+		}
+
+		intFrameModifyJuez.setVisible(true);
+		intFrameModifyJuez.moveToFront();
+	}
+
+	public static void doModifyJuicio() {
+		if (intFrameModifyJuicio == null) {
+			intFrameModifyJuicio = new JInternalFrame("MODIFICAR JUICIO", true, true, false, false);
+			intFrameModifyJuicio.getContentPane().add(new ModificarJuicioPanel(), BorderLayout.CENTER);
+		}
+		intFrameModifyJuicio.setBounds(0, 0, 600, 450);
+
+		if (intFrameModifyJuicio.getParent() == null) {
+			desktopPane.add(intFrameModifyJuicio);
+		}
+
+		intFrameModifyJuicio.setVisible(true);
+		intFrameModifyJuicio.moveToFront();
+	}
+
+	public static void doModifyPersona() {
+		if (intFrameModifyPersona == null) {
+			intFrameModifyPersona = new JInternalFrame("MODIFICAR PERSONA", true, true, false, false);
+			intFrameModifyPersona.getContentPane().add(new ModificarPersonaPanel(), BorderLayout.CENTER);
+		}
+		intFrameModifyPersona.setBounds(0, 0, 600, 450);
+
+		if (intFrameModifyPersona.getParent() == null) {
+			desktopPane.add(intFrameModifyPersona);
+		}
+
+		intFrameModifyPersona.setVisible(true);
+		intFrameModifyPersona.moveToFront();
 	}
 }

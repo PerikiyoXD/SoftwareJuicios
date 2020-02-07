@@ -1,13 +1,13 @@
 package softwareJuicios.entidades;
 
 public class Persona {
-	public String dni, nombre, apellido;
+	public String dni, nombre, apellidos;
 
 	public Persona(String dni, String nombre, String apellido) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
-		this.apellido = apellido;
+		this.apellidos = apellido;
 	}
 
 	public String getDni() {
@@ -26,17 +26,17 @@ public class Persona {
 		this.nombre = nombre;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getApellidos() {
+		return apellidos;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellidos(String apellido) {
+		this.apellidos = apellido;
 	}
 
 	@Override
 	public String toString() {
-		return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+		return dni + ": " + apellidos + ", " + nombre;
 	}
 
 }

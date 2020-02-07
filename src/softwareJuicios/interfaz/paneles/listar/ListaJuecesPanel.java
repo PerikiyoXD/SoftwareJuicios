@@ -30,17 +30,11 @@ public class ListaJuecesPanel extends JPanel implements IListaPanel {
 	private JScrollPane scrollPane;
 	private JButton bInsert;
 	private JButton bDelete;
+	private JButton bModify;
 
 	public ListaJuecesPanel() {
 		setBorder(new TitledBorder(null, "Lista de jueces", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][]"));
-
-		bUpdate = new JButton("Actualizar");
-		bUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doUpdate();
-			}
-		});
+		setLayout(new MigLayout("", "[grow,fill]", "[grow,fill][][]"));
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0,grow");
@@ -55,7 +49,6 @@ public class ListaJuecesPanel extends JPanel implements IListaPanel {
 			}
 		});
 		add(bInsert, "flowx,cell 0 1");
-		add(bUpdate, "cell 0 1,growx");
 
 		bDelete = new JButton("Eliminar");
 		bDelete.addActionListener(new ActionListener() {
@@ -63,7 +56,23 @@ public class ListaJuecesPanel extends JPanel implements IListaPanel {
 				doDelete();
 			}
 		});
+
+		bModify = new JButton("Modificar");
+		bModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doModify();
+			}
+		});
+		add(bModify, "cell 0 1");
 		add(bDelete, "cell 0 1");
+
+		bUpdate = new JButton("Actualizar");
+		bUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doUpdate();
+			}
+		});
+		add(bUpdate, "cell 0 2,growx");
 
 		// Llenar la tabla con datos
 		doUpdate();
@@ -94,7 +103,7 @@ public class ListaJuecesPanel extends JPanel implements IListaPanel {
 	 * Lógica de inserción
 	 */
 	public void doInsert() {
-		VentanaPrincipal.doAddJueces();
+		VentanaPrincipal.doInsertJueces();
 	}
 
 	/***
@@ -115,5 +124,23 @@ public class ListaJuecesPanel extends JPanel implements IListaPanel {
 			dtm.addRow(new Object[] { j.dniJuez, j.nombre, j.apellidos });
 		}
 		table.setModel(dtm);
+	}
+
+	@Override
+	public void doModify() {
+		int selectedRow = table.getSelectedRow();
+		String dniJuez = (String) table.getValueAt(selectedRow, 0);
+
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(this, "Seleccione una fila para modificar");
+			return;
+		}
+
+		for (Juez j : GestionJuez.jueces) {
+			if (j.dniJuez == dniJuez) {
+				VentanaPrincipal.doModifyJuez(j);
+				return;
+			}
+		}
 	}
 }

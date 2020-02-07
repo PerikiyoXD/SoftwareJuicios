@@ -86,7 +86,7 @@ public class AltaPersonaPanel extends JPanel {
 
 		Persona persona = new Persona(dni, nombre, apellido);
 		GestionPersona.alta(persona);
-		((ListaPersonasPanel) VentanaPrincipal.internalFrameListPersonas.getContentPane().getComponent(0)).doUpdate();
+		((ListaPersonasPanel) VentanaPrincipal.intFrameListaPersonas.getContentPane().getComponent(0)).doUpdate();
 	}
 
 }
